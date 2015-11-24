@@ -1,0 +1,51 @@
+ <header>
+        <h1 class="container">
+            Dawg Coffee <br /> Orders
+        </h1>
+        <div id="motto" class="container">Supplying Beans to Sleepy Huskies Since 2015</div>
+    </header>
+
+<table class="table"  ng-init="ourOrders.total = 0">
+            <tr>
+                <td><i>blend</i></td>
+				<td><i>quantity</i></td>
+				<td><i>grind type</i></td>
+				<td><i>price/pound</i></td>
+				<td><i>total</i></td>
+            </tr>
+			
+			<tr ng-repeat="order in ourOrders">
+                <td>{{order.name}}</td>
+				<td>{{order.quantity}}</td>
+				<td>{{order.grind}}</td>
+				<td>{{order.price | currency:'$':0}}</td>
+				<td ng-init="ourOrders.total = ourOrders.total + (order.price * order.quantity)">{{order.price * order.quantity | currency:'$':0}}</td>
+				
+            </tr>
+			
+			<td>Grand Total: {{ourOrders.total | currency:'$':0}}</td>
+			
+        </table>
+		<button type="submit" class="btn btn-primary" ng-click="submitOrder()">Submit Order</button>
+
+<!--
+The bean detail page should also include an order form so the customer can add that product to their shopping cart. 
+They should be able to indicate how many pounds they desire (minimum of 1, maximum of 10, whole point increments) 
+and what kind of grind they need (Whole Bean, Espresso, French Press, Cone Drip Filter, or Flat Bottom Filter). See below for more details about the shopping cart.
+
+/orders/cart
+Shows the contents of the customer's current shopping cart. 
+The customer must see each item added, including the name of the bean, the desired grind type, the current price per pound, the quantity of pounds ordered, 
+and the extended price (quantity * price per-pound). The customer should also see a grand total price, which is the sum of all extended prices.
+
+When viewing the cart, the customer must be able to adjust the quantity on each item up or down, 
+but the quantity must never fall bellow 1 and must never increase beyond 10. 
+As the quantity changes, the extended price and grand total price should also update accordingly. 
+The customer should also be able to remove an item from the cart (which of course causes the grand total price to update accordingly).
+
+Finally, the customer should be able to "submit" their order. 
+For now the page, should just thank the user (e.g., with a modal) for their order. 
+Submitting the order should also empty the cart (since it's now submitted!)
+
+
+-->

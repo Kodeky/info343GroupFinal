@@ -1,0 +1,50 @@
+ <header>
+        <h1 class="container">
+            Dawg Coffee <br /> Orders
+        </h1>
+        <div id="motto" class="container">Supplying Beans to Sleepy Huskies Since 2015</div>
+    </header>
+
+	<h3>About the blend</h3>
+	<div id="info" class="container">
+		<img src={{order.image}} class="coffeeIMG"></img>
+		<h4>{{order.name}}</h4>
+		<p>{{order.description}}</p>
+	</div>
+	<br>
+	
+	<h3>New Order</h3>	
+	<div id="menu" class = "container">
+		
+		<form name="postForm" class="form-horizontal">
+		<div class="story">
+			<div class="form-group" id="story">
+			  <label for="quantity">Quantity:</label>
+			  <input type="number" placeholder="###" name="quantity" ng-model="newItem.quantity"
+			   min="1" max="10" required>
+			</div>
+			<label for="grind"> Grind select: </label>
+			<br>
+			<select name="singleSelect" ng-model="newItem.grind">
+				<option value="">--Please Select a Blend--</option>
+				<option value="Whole Bean">Whole Bean</option>
+				<option value="Espresso">Espresso</option>
+				<option value="French Press">French Press</option>
+				<option value="Cone Drip Filter">Cone Drip Filter</option>
+				<option value="Flat Bottom Filter">Flat Bottom Filter</option>
+			</select>
+			<br>
+			<br>
+			<button type="submit" class="btn btn-primary" ng-click="postToCart(newItem)" ng-disabled="postForm.quantity.$invalid">Post Entry</button>
+		</div>
+		</form>  
+		  
+	</div>
+
+<h3>About the grower</h3>
+<div id="info" class="container">
+	<img src={{order.grower.image}} class="coffeeIMG"></img>
+	<h4>{{order.grower.name}}</h4>
+	<p>{{order.grower.description}}</p>
+	<a href={{order.grower.externalUrl}}>grower site</a>
+</div>
