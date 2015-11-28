@@ -1,0 +1,79 @@
+@import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css);
+@import url(https://fonts.googleapis.com/css?family=Poiret+One|Dosis:400,800,200|Unica+One|Raleway+Dots|Lobster);
+
+
+#head {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+nav {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    background-color: #468094;
+    font-size: 16px;
+    width: 100%;
+    height: 48px;
+    z-index: 1; 
+    text-decoration: none;
+}
+
+    nav li {
+        display: inline-block;
+    }
+
+    nav a {
+        font-family: "Lobster", sans-serif;
+        font-size: 32px;
+        display: inline-block;
+        width: 100px;
+        height: 16px;
+        padding-right: 24px;
+        float: left;
+        color: white;
+        text-decoration: none;
+    }
+
+    nav a:hover {
+        text-decoration: none;
+        color: #9FC6D4; 
+    }
+    nav a:focus {
+        text-decoration: none;
+        color: white; 
+    }
+
+#cf {
+    padding-right: 0px;
+    padding-left: 0px;
+    font-family: "Dosis", "Helvetica", sans-serif;
+}
+
+#mainArea {
+    width: 100%;
+    padding-top: 48px;
+}
+
+    #leftContent {
+        background-color: #9FC6D4; 
+        padding-top: 10px;
+    }
+
+    #centerContent {
+        padding-top: 10px;
+    }
+
+    #rightContent {
+        background-color: #9FC6D4; 
+        padding-top: 10px;
+    }
+    
+/*
+    #header {
+        font-family: "Poiret One", "Helvetica", sans-serif;
+    }
+
+    #para {
+        font-family: "Poiret One", "Helvetica", sans-serif;
+    }
+*/
