@@ -6,6 +6,7 @@
     padding-right: 0px;
     padding-left: 0px;
 }
+
 nav {
     position: fixed;
     top: 0px;
@@ -61,7 +62,11 @@ nav {
 
     #centerContent {
         background-color: white; 
-        padding-top: 10px;
+        padding-top: 5px;
+    }
+
+    #tabs {
+        font-size: 24px;
     }
 
     #rightContent {
