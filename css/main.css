@@ -30,6 +30,8 @@ nav {
         width: 100px;
         height: 16px;
         padding-right: 24px;
+		padding-left: 2em;
+		padding-bottom: 1em;
         float: left;
         color: white;
         text-decoration: none;
@@ -43,6 +45,15 @@ nav {
         text-decoration: none;
         color: white; 
     }
+
+//for searchbar in navbar	
+#search {
+	display: inline-block;
+	float: right;
+	margin-top: 0em;
+	padding-top: 0.25em;
+	padding-right: 1em;
+}
 
 #cf {
     padding-right: 0px;
