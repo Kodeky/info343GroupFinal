@@ -1,5 +1,5 @@
 @import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css);
-@import url(https://fonts.googleapis.com/css?family=Poiret+One|Dosis:400,800,200|Unica+One|Raleway+Dots|Lobster);
+@import url(https://fonts.googleapis.com/css?family=Dosis:400,800,200|Lobster);
 
 
 #head {
@@ -60,6 +60,7 @@ nav {
     }
 
     #centerContent {
+        background-color: white; 
         padding-top: 10px;
     }
 
@@ -67,13 +68,22 @@ nav {
         background-color: #9FC6D4; 
         padding-top: 10px;
     }
-    
-/*
-    #header {
-        font-family: "Poiret One", "Helvetica", sans-serif;
-    }
 
-    #para {
-        font-family: "Poiret One", "Helvetica", sans-serif;
-    }
-*/
+#footer {
+    color: white;
+    padding-bottom: 0px;
+    width: 100%;
+    margin-left: 0px;
+    float: left;
+    border-top-style: solid;
+    border-top-width: 3px; 
+    border-top-color: #144859;
+    font-size: 12px;
+    background-color: #468094;
+}
+
+#footer p {
+    margin: 0 0 0 0;
+}
+
+    
