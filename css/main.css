@@ -46,7 +46,7 @@ nav {
         color: white; 
     }
 
-//for searchbar in navbar	
+/* for searchbar in navbar	*/
 #search {
 	display: inline-block;
 	float: right;
@@ -66,24 +66,24 @@ nav {
     padding-top: 48px;
 }
 
-    #leftContent {
-        background-color: #9FC6D4; 
-        padding-top: 10px;
-    }
+#leftContent {
+    background-color: #9FC6D4; 
+    padding-top: 10px;
+}
 
-    #centerContent {
-        background-color: white; 
-        padding-top: 5px;
-    }
+#centerContent {
+    background-color: white; 
+    padding-top: 5px;
+}
 
-    #tabs {
-        font-size: 24px;
-    }
+#tabs {
+    font-size: 24px;
+}
 
-    #rightContent {
-        background-color: #9FC6D4; 
-        padding-top: 10px;
-    }
+#rightContent {
+    background-color: #9FC6D4; 
+    padding-top: 10px;
+}
 
 #footer {
     color: white;
@@ -102,4 +102,6 @@ nav {
     margin: 0 0 0 0;
 }
 
-    
+.form-control {
+    width: 100%;
+}
