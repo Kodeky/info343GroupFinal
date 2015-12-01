@@ -37,8 +37,8 @@
     </header>
         
     <section id="mainArea">
-            <div id="leftContent" class="col-md-3 col-sm-3">
-                <h1 id="header">Events</h1>
+            <div id="leftContent" class="col-md-3 col-sm-3 collapse in">
+                <h1 id="header">Events </h1>
                 <p id="para">Habemus detraxit appellantur ius in, quas decore nostro eu has, in diam eius est. Ne splendide assueverit vel, ei vim consequat intellegam. <br><br>
 In oratio graece prodesset per, ut vim inani nullam. Vis ea integre oblique invenire, at eros errem docendi quo, eius error libris ex cum. <br><br>
 Nam prima detracto partiendo ei, praesent vulputate ea sit. Eu nam alia scripserit. Ea amet esse erant sit. Ne tritani fabulas mea, vis dicam causae id, est eu quaestio imperdiet. <br><br>
@@ -48,7 +48,10 @@ Nam prima detracto partiendo ei, praesent vulputate ea sit. Eu nam alia scripser
             </div>
         
             <div id="centerContent" class="col-md-6 col-sm-6" class="container">
+                <a href="#leftContent" data-toggle="collapse">Events</a> 
+                <a href="#rightContent" data-toggle="collapse">Activity</a> 
                 <h1 id="header">
+                    
                   <ul class="nav nav-tabs">
                     <li class="active">
                         <a href="#featured" data-toggle="tab">Featured</a>
@@ -69,13 +72,20 @@ Nam prima detracto partiendo ei, praesent vulputate ea sit. Eu nam alia scripser
                         <table class="table">
                             <tr>
                                 <th>Avatar</th>
+                                <th><a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse">Rating</a></th>
                                 <th><a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse">Username</a></th>
                                 <th><a href="" ng-click="sortType = 'full_name'; sortReverse = !sortReverse">Full Name</a></th>
                                 <th><a href="" ng-click="sortType = 'track_count'; sortReverse = !sortReverse">Track Count</a></th>
                                 <th>SoundCloud Player</th>
                               </tr>
-                          <tr ng-repeat="user in users | orderBy:sortType:sortReverse | filter:searchQuery" ng-onclick="loadInfo($index)">
+                          
+                            <tr ng-repeat="user in users | orderBy:sortType:sortReverse | filter:searchQuery" ng-onclick="loadInfo($index)">
                             <td><img ng-src="{{user.avatar_url}}"></td>
+                            <td>
+                                <button class="btn btn-default" type="submit" id="upvote{{$index}}" ng-click="upvote($index)"><i class="glyphicon glyphicon-arrow-up"></i></button>
+                                {{user.rating}}
+                                <button class="btn btn-default" type="submit" id="downvote{{$index}}" ng-click="downvote($index)"><i class="glyphicon glyphicon-arrow-down"></i></button>
+                            </td>
                             <td>{{user.username}}</td>
                             <td>{{user.full_name}}</td>
                             <td>{{user.track_count}}</td>
@@ -132,7 +142,7 @@ Nam prima detracto partiendo ei, praesent vulputate ea sit. Eu nam alia scripser
                     </div>
                 </div>
             
-            <div id="rightContent" class="col-md-3 col-sm-3">
+            <div id="rightContent" class="col-md-3 col-sm-3 collapse in">
                 <h1 id="header">Activity</h1>
                 <p id="para">Consul soluta prompta eam an. Habemus detraxit appellantur ius in, quas decore nostro eu has, in diam eius est. Ne splendide assueverit vel, ei vim consequat intellegam. In oratio graece prodesset per, ut vim inani nullam. Vis ea integre oblique invenire, at eros errem docendi quo, eius error libris ex cum. Nam prima detracto partiendo ei, praesent vulputate ea sit. Eu nam alia scripserit. Ea amet esse erant sit. Ne tritani fabulas mea, vis dicam causae id, est eu quaestio imperdiet. Cu semper constituam mea, has mollis argumentum at, et vivendo persequeris vel. Eam novum expetenda te. Dolore dolores eam ea, eam te ludus maiorum imperdiet. Ipsum postea volumus te nec, qui ei nostrum luptatum consetetur. At mel intellegat inciderint. Civibus salutandi vix ne. Vis ea integre oblique invenire, at eros errem docendi quo, eius error libris ex cum. Nam prima detracto partiendo ei, praesent vulputate ea sit. Eu nam alia scripserit. Ea amet esse erant sit. Ne tritani fabulas mea, vis dicam causae id, est eu quaestio imperdiet. Cu semper constituam mea, has mollis argumentum at, et vivendo persequeris vel. Eam novum expetenda te. Dolore dolores eam ea, eam te ludus maiorum imperdiet. Ipsum postea volumus te nec, qui ei nostrum luptatum consetetur. </p>
             </div>
