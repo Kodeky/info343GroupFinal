@@ -69,11 +69,13 @@ nav {
 #leftContent {
     background-color: #9FC6D4; 
     padding-top: 10px;
+    height: 100%;
 }
 
 #centerContent {
     background-color: white; 
     padding-top: 5px;
+    height: 100%;
 }
 
 #tabs {
@@ -83,6 +85,7 @@ nav {
 #rightContent {
     background-color: #9FC6D4; 
     padding-top: 10px;
+    height: 100%;
 }
 
 #footer {
