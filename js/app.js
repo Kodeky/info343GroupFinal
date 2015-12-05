@@ -7,6 +7,12 @@ var app = angular.module("localSoundApp", ['ngSanitize', 'firebase']);
 
 app.controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
     
+    	$scope.sortReverse  = false;  // resets/initilizes the default sort order
+        $scope.isVisible = []; // resets/initilizes the array for show buttons
+        $scope.isHidden = []; // resets/initilizes the array for hide buttons
+        $scope.seletedIndex = -1; // resets/initilizes the username selected
+
+    
     //To test local data; will be replaced by firebase
     $scope.posts = [
         {
@@ -17,6 +23,14 @@ app.controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $
             post_date: Date(),
             soundcloud_url: "https://soundcloud.com/aboveandbeyond"
         },
+        {
+            username: "Tiesto",
+            full_name: "Tiesto",
+            track_count: 0,
+            rating: 0,
+            post_date: Date(),
+            soundcloud_url: "https://soundcloud.com/tiesto"
+        }
     ];
     
 
@@ -36,7 +50,7 @@ app.controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $
         $scope.posts.push($scope.post);
     }
       
-    $scope.addPost;
+    //$scope.addPost;
     
     
     //TODO: Add upvote functionality to featured posts
@@ -47,6 +61,22 @@ app.controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $
     //TODO: Add downvote functionality to featured posts
     $scope.downVote = function() {
         
+    }
+    
+    $scope.loadInfo = function($index) {
+    	$scope.selectedIndex = $index;
+    	var id = $scope.posts[$index].soundcloud_url;
+
+    	//Shows or hides SoundCloud player depending on what button was pressed
+        if($scope.isVisible[$index]) {
+    		var src = "https://w.soundcloud.com/player/?url=" + id + "&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;visual=true";
+    		$scope.player = '<iframe width="100%" height="350" scrolling="yes" frameborder="no"  src=' + src + '></iframe>'
+    		$scope.trustPlayer = $sce.trustAsHtml($scope.player);
+    	} else {
+    		$scope.trustPlayer = $sce.trustAsHtml('');
+    	}
+    	$scope.isVisible[$index] = !$scope.isVisible[$index];
+		$scope.isHidden[$index] = !$scope.isHidden[$index];
     }
     
     console.log($scope.posts);
