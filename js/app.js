@@ -33,7 +33,10 @@ app.controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $
         }
     ];
     
-
+    for (var i=0; i<$scope.posts.length; i++) {
+        $scope.isVisible[i] = 'true'    ;    
+    }
+    
     //Local method to add posts
     //TODO: change to add to firebase
     $scope.addPost = function() {
@@ -77,6 +80,7 @@ app.controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $
     	}
     	$scope.isVisible[$index] = !$scope.isVisible[$index];
 		$scope.isHidden[$index] = !$scope.isHidden[$index];
+        console.log($scope.isVisible);
     }
     
     console.log($scope.posts);

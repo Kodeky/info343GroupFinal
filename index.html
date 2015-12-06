@@ -80,10 +80,9 @@ Nam prima detracto partiendo ei, praesent vulputate ea sit. Eu nam alia scripser
                             <td>{{post.track_count}}</td>
                             <td>{{post.post_date | fDate:"MM/dd/yyyy 'at' h:mma"}}</td>
                             <td>
-                                <a href= "{{post.soundcloud_url}}">Soundcloud</a>
                               <div class="infoWrapper"><!-- Shows button corresponding to the Soundcloud player frame-->
-                                <button class="btn btn-default" type="submit" id="show{{$index}}" ng-click="loadInfo($index)" >Show</button>
-                                <button class="btn btn-default" type="submit" id="hide{{$index}}" ng-click="loadInfo($index)" >Hide</button>
+                                <button class="btn btn-default" type="submit" id="show{{$index}}" ng-click="loadInfo($index)" ng-show="isVisible[{{$index}}]">Show</button>
+                                <button class="btn btn-default" type="submit" id="hide{{$index}}" ng-click="loadInfo($index)" ng-show="isHidden[{{$index}}]">Hide</button>
                               </div>
                             </td>
                           </tr>
