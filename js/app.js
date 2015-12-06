@@ -6,14 +6,8 @@ var CLIENT_ID = 'd2de86b6f2a8c564b00e1f78421fab9d';
 var app = angular.module("localSoundApp", ['ngSanitize', 'firebase']);
 
 app.controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
-    
-    	$scope.sortReverse  = false;  // resets/initilizes the default sort order
-        $scope.isVisible = []; // resets/initilizes the array for show buttons
-        $scope.isHidden = []; // resets/initilizes the array for hide buttons
-        $scope.seletedIndex = -1; // resets/initilizes the username selected
-
-    
-    //To test local data; will be replaced by firebase
+        
+    //To test local data; will be replaced by firebase data array.
     $scope.posts = [
         {
             username: "AboveandBeyond",
@@ -33,6 +27,13 @@ app.controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $
         }
     ];
     
+    
+    $scope.sortReverse  = false;  // resets/initilizes the default sort order
+    $scope.isVisible = []; // resets/initilizes the array for show buttons
+    $scope.isHidden = []; // resets/initilizes the array for hide buttons
+    $scope.seletedIndex = -1; // resets/initilizes the username selected
+
+    //initilizes show/hide button array. Should be kept locally.
     for (var i=0; i<$scope.posts.length; i++) {
         $scope.isVisible[i] = 'true'    ;    
     }
@@ -56,14 +57,14 @@ app.controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $
     //$scope.addPost;
     
     
-    //TODO: Add upvote functionality to featured posts
-    $scope.upVote = function() {
-        
+    //TODO: change from local to firebase
+    $scope.upvote = function($index) {
+        $scope.posts[$index].rating += 1;
     }
     
-    //TODO: Add downvote functionality to featured posts
-    $scope.downVote = function() {
-        
+    //TODO: change from local to firebase
+    $scope.downvote = function($index) {
+        $scope.posts[$index].rating -= 1;
     }
     
     $scope.loadInfo = function($index) {
