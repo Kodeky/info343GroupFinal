@@ -1,16 +1,21 @@
 'use strict';
 
-var BASE_URL = 'https://api.soundcloud.com';
-var CLIENT_ID = 'd2de86b6f2a8c564b00e1f78421fab9d';
+var SOUNDCLOUD_BASE_URL = 'https://api.soundcloud.com';
+var SOUNDCLOUD_CLIENT_ID = '3a0c15409a6b0e2610d61620155a549c';
+
+var FACEBOOK_APP_ID = '1676203739293367';
 
 var app = angular.module("localSoundApp", ['ngSanitize', 'firebase']);
 
-app.controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
+app.controller("localSoundCtrl", ['$scope', '$http', '$sce', '$firebaseAuth', function ($scope, $http, $sce, $firebaseAuth) {
     
-    	$scope.sortReverse  = false;  // resets/initilizes the default sort order
-        $scope.isVisible = []; // resets/initilizes the array for show buttons
-        $scope.isHidden = []; // resets/initilizes the array for hide buttons
-        $scope.seletedIndex = -1; // resets/initilizes the username selected
+    var ref = new Firebase("https://localsound.firebaseio.com");
+    
+                                  
+    $scope.sortReverse  = false;  // resets/initilizes the default sort order
+    $scope.isVisible = []; // resets/initilizes the array for show buttons
+    $scope.isHidden = []; // resets/initilizes the array for hide buttons
+    $scope.seletedIndex = -1; // resets/initilizes the username selected
 
     
     //To test local data; will be replaced by firebase
@@ -66,6 +71,18 @@ app.controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $
          $scope.posts[$index].rating -= 1;
     }
     
+    $scope.login =function() {        
+        ref.authWithOAuthPopup("facebook", function(error, authData) {
+            if (error) {
+                console.log("Login Failed!", error);
+            } else {
+                console.log("Authenticated successfully with payload:", authData);
+            }
+        }, {
+            remember: "sessionOnly"
+        });
+    }
+    
     $scope.loadInfo = function($index) {
     	$scope.selectedIndex = $index;
     	var id = $scope.posts[$index].soundcloud_url;
@@ -80,11 +97,7 @@ app.controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $
     	}
     	$scope.isVisible[$index] = !$scope.isVisible[$index];
 		$scope.isHidden[$index] = !$scope.isHidden[$index];
-        console.log($scope.isVisible);
     }
-    
-    console.log($scope.posts);
-    
 }])
 .factory('featuredPosts', ['$firebaseArray', function($firebaseArray) {
     var myFirebase = new Firebase("https://localsound.firebaseio.com/");
