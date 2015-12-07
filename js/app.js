@@ -5,13 +5,19 @@ var SOUNDCLOUD_CLIENT_ID = '3a0c15409a6b0e2610d61620155a549c';
 
 var FACEBOOK_APP_ID = '1676203739293367';
 
-var app = angular.module("localSoundApp", ['ngSanitize', 'firebase']);
+var app = angular.module("localSoundApp", ['ngSanitize', 'firebase', "ui.router"]);
 
-app.controller("localSoundCtrl", ['$scope', '$http', '$sce', '$firebaseAuth', function ($scope, $http, $sce, $firebaseAuth) {
+app.config(function($stateProvider, $urlRouterProvider){
+    $urlRouterProvider.otherwise('/');
+	$stateProvider
+	    .state('index', {
+	        url: "/",
+			templateUrl: "templates/home.html"
+	    })
+}).controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
     
     var ref = new Firebase("https://localsound.firebaseio.com");
-    
-                                  
+                               
     $scope.sortReverse  = false;  // resets/initilizes the default sort order
     $scope.isVisible = []; // resets/initilizes the array for show buttons
     $scope.isHidden = []; // resets/initilizes the array for hide buttons
@@ -38,6 +44,7 @@ app.controller("localSoundCtrl", ['$scope', '$http', '$sce', '$firebaseAuth', fu
         }
     ];
     
+    //Initializes Show and hide for posts
     for (var i=0; i<$scope.posts.length; i++) {
         $scope.isVisible[i] = 'true'    ;    
     }
@@ -58,9 +65,6 @@ app.controller("localSoundCtrl", ['$scope', '$http', '$sce', '$firebaseAuth', fu
         $scope.posts.push($scope.post);
     }
       
-    //$scope.addPost;
-    
-    
     //TODO: Add upvote functionality to featured posts
     $scope.upVote = function() {
          $scope.posts[$index].rating += 1;
@@ -71,6 +75,7 @@ app.controller("localSoundCtrl", ['$scope', '$http', '$sce', '$firebaseAuth', fu
          $scope.posts[$index].rating -= 1;
     }
     
+    //Facebook OAuth login
     $scope.login =function() {        
         ref.authWithOAuthPopup("facebook", function(error, authData) {
             if (error) {
@@ -83,6 +88,7 @@ app.controller("localSoundCtrl", ['$scope', '$http', '$sce', '$firebaseAuth', fu
         });
     }
     
+    //Loads featured info
     $scope.loadInfo = function($index) {
     	$scope.selectedIndex = $index;
     	var id = $scope.posts[$index].soundcloud_url;
