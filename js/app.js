@@ -11,9 +11,17 @@ app.config(function($stateProvider, $urlRouterProvider){
     $urlRouterProvider.otherwise('/');
 	$stateProvider
 	    .state('index', {
-	        url: "/",
+	        url: '/',
 			templateUrl: "templates/home.html"
 	    })
+        .state('profile', {
+            url: '/profile',
+            templateUrl: "templates/profile.html"
+        })
+        .state('events', {
+            url: '/events',
+            templateUrl: "templates/events.html"
+        })
 }).controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
     
     var ref = new Firebase("https://localsound.firebaseio.com");
