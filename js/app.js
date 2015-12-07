@@ -58,12 +58,12 @@ app.controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $
     
     //TODO: Add upvote functionality to featured posts
     $scope.upVote = function() {
-        
+         $scope.posts[$index].rating += 1;
     }
     
     //TODO: Add downvote functionality to featured posts
     $scope.downVote = function() {
-        
+         $scope.posts[$index].rating -= 1;
     }
     
     $scope.loadInfo = function($index) {
