@@ -108,3 +108,25 @@ nav {
 .form-control {
     width: 100%;
 }
+
+.img-wrapper {
+    width: 200px;
+    height: 200px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+img-wrapper img {
+    height: 200px;
+    width: 200px;
+}
+
+.img-wrapper button {
+    position: relative;
+    bottom: 32px;
+}
+
+.profile_posts {
+    background-color: #9FC6D4;
+    margin-bottom: 1em;
+}
