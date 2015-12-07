@@ -1,13 +1,38 @@
 'use strict';
 
-var BASE_URL = 'https://api.soundcloud.com';
-var CLIENT_ID = 'd2de86b6f2a8c564b00e1f78421fab9d';
+var SOUNDCLOUD_BASE_URL = 'https://api.soundcloud.com';
+var SOUNDCLOUD_CLIENT_ID = '3a0c15409a6b0e2610d61620155a549c';
 
-var app = angular.module("localSoundApp", ['ngSanitize', 'firebase']);
+var FACEBOOK_APP_ID = '1676203739293367';
 
-app.controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
-        
-    //To test local data; will be replaced by firebase data array.
+var app = angular.module("localSoundApp", ['ngSanitize', 'firebase', "ui.router"]);
+
+app.config(function($stateProvider, $urlRouterProvider){
+    $urlRouterProvider.otherwise('/');
+	$stateProvider
+	    .state('index', {
+	        url: '/',
+			templateUrl: "templates/home.html"
+	    })
+        .state('profile', {
+            url: '/profile',
+            templateUrl: "templates/profile.html"
+        })
+        .state('events', {
+            url: '/events',
+            templateUrl: "templates/events.html"
+        })
+}).controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
+    
+    var ref = new Firebase("https://localsound.firebaseio.com");
+                               
+    $scope.sortReverse  = false;  // resets/initilizes the default sort order
+    $scope.isVisible = []; // resets/initilizes the array for show buttons
+    $scope.isHidden = []; // resets/initilizes the array for hide buttons
+    $scope.seletedIndex = -1; // resets/initilizes the username selected
+
+    
+    //To test local data; will be replaced by firebase
     $scope.posts = [
         {
             username: "AboveandBeyond",
@@ -27,13 +52,7 @@ app.controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $
         }
     ];
     
-    
-    $scope.sortReverse  = false;  // resets/initilizes the default sort order
-    $scope.isVisible = []; // resets/initilizes the array for show buttons
-    $scope.isHidden = []; // resets/initilizes the array for hide buttons
-    $scope.seletedIndex = -1; // resets/initilizes the username selected
-
-    //initilizes show/hide button array. Should be kept locally.
+    //Initializes Show and hide for posts
     for (var i=0; i<$scope.posts.length; i++) {
         $scope.isVisible[i] = 'true'    ;    
     }
@@ -54,19 +73,30 @@ app.controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $
         $scope.posts.push($scope.post);
     }
       
-    //$scope.addPost;
-    
-    
-    //TODO: change from local to firebase
-    $scope.upvote = function($index) {
-        $scope.posts[$index].rating += 1;
+    //TODO: Add upvote functionality to featured posts
+    $scope.upVote = function() {
+         $scope.posts[$index].rating += 1;
     }
     
-    //TODO: change from local to firebase
-    $scope.downvote = function($index) {
-        $scope.posts[$index].rating -= 1;
+    //TODO: Add downvote functionality to featured posts
+    $scope.downVote = function() {
+         $scope.posts[$index].rating -= 1;
     }
     
+    //Facebook OAuth login
+    $scope.login =function() {        
+        ref.authWithOAuthPopup("facebook", function(error, authData) {
+            if (error) {
+                console.log("Login Failed!", error);
+            } else {
+                console.log("Authenticated successfully with payload:", authData);
+            }
+        }, {
+            remember: "sessionOnly"
+        });
+    }
+    
+    //Loads featured info
     $scope.loadInfo = function($index) {
     	$scope.selectedIndex = $index;
     	var id = $scope.posts[$index].soundcloud_url;
@@ -81,11 +111,7 @@ app.controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $
     	}
     	$scope.isVisible[$index] = !$scope.isVisible[$index];
 		$scope.isHidden[$index] = !$scope.isHidden[$index];
-        console.log($scope.isVisible);
     }
-    
-    console.log($scope.posts);
-    
 }])
 .factory('featuredPosts', ['$firebaseArray', function($firebaseArray) {
     var myFirebase = new Firebase("https://localsound.firebaseio.com/");

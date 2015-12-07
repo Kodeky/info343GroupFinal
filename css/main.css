@@ -27,11 +27,10 @@ nav {
         font-family: "Lobster", sans-serif;
         font-size: 32px;
         display: inline-block;
-        width: 100px;
         height: 16px;
-        padding-right: 24px;
-		padding-left: 2em;
-		padding-bottom: 1em;
+        padding-right: .5em;
+		padding-left: .5em;
+		padding-bottom: .5em;
         float: left;
         color: white;
         text-decoration: none;
@@ -46,7 +45,8 @@ nav {
         color: white; 
     }
 
-/* for searchbar in navbar	*/
+
+/* for searchbar */
 #search {
 	display: inline-block;
 	float: right;
