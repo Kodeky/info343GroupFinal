@@ -30,6 +30,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     $scope.isVisible = []; // resets/initilizes the array for show buttons
     $scope.isHidden = []; // resets/initilizes the array for hide buttons
     $scope.seletedIndex = -1; // resets/initilizes the username selected
+    $scope.isLoggedIn = false; //resets/intitilzes logged in trigger
 
     
     //To test local data; will be replaced by firebase
@@ -84,16 +85,21 @@ app.config(function($stateProvider, $urlRouterProvider){
     }
     
     //Facebook OAuth login
-    $scope.login =function() {        
+    $scope.login = function() {        
         ref.authWithOAuthPopup("facebook", function(error, authData) {
             if (error) {
-                console.log("Login Failed!", error);
+                alert("Login Failed!", error);
             } else {
-                console.log("Authenticated successfully with payload:", authData);
+                $scope.isLoggedIn = true;
+                $scope.$digest();
             }
         }, {
             remember: "sessionOnly"
         });
+    }
+    
+    $scope.logout = function() {
+        $scope.isLoggedIn = false;
     }
     
     //Loads featured info
