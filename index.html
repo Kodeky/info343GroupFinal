@@ -30,8 +30,8 @@
             <li><a ui-sref="events">Events</a></li>
 			<div class="pull-right">
                 <li><a ui-sref="signup" id="login" ng-show="!isLoggedIn">Sign-Up</a></li>
-                <li><a ng-click="login()" id="login" ng-show="!isLoggedIn">Login</a></li>
-                <li><a ng-click="logout()" id="logout" ng-show="isLoggedIn">Logout</a></li>
+                <li><a id="login" ng-show="!isLoggedIn" ui-sref="login">Login</a></li>
+                <li><a ng-click="logout()" id="logout" ng-show="isLoggedIn" href="">Logout</a></li>
 			</div>  
 			
 		</nav>

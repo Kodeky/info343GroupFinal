@@ -26,6 +26,10 @@ app.config(function($stateProvider, $urlRouterProvider){
             url: '/signup',
             templateUrl: "templates/signup.html"
         })
+        .state('login', {
+            url: '/login',
+        templateUrl: "templates/login.html"
+        })
 }).controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
     
     var ref = new Firebase("https://localsound.firebaseio.com");
@@ -80,7 +84,8 @@ app.config(function($stateProvider, $urlRouterProvider){
       
     //TODO: Add upvote functionality to featured posts
     $scope.upVote = function() {
-         $scope.posts[$index].rating += 1;
+        $scope.posts[$index].rating += 1;
+        console.log($scope.posts[$index].rating);
     }
     
     //TODO: Add downvote functionality to featured posts
@@ -89,7 +94,10 @@ app.config(function($stateProvider, $urlRouterProvider){
     }
     
     //Facebook OAuth login
-    $scope.login = function() {        
+    $scope.login = function() { 
+        $scope.isLoggedIn = true;
+        //$scope.$digest();
+        /*
         ref.authWithOAuthPopup("facebook", function(error, authData) {
             if (error) {
                 alert("Login Failed!", error);
@@ -100,6 +108,7 @@ app.config(function($stateProvider, $urlRouterProvider){
         }, {
             remember: "sessionOnly"
         });
+        */
     }
     
     $scope.logout = function() {
