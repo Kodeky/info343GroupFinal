@@ -88,6 +88,11 @@ nav {
     height: 100%;
 }
 
+footer {
+    position: fixed;
+    bottom: 0px;
+}
+
 #footer {
     color: white;
     padding-bottom: 0px;
