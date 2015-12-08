@@ -84,7 +84,8 @@ app.config(function($stateProvider, $urlRouterProvider){
       
     //TODO: Add upvote functionality to featured posts
     $scope.upVote = function() {
-         $scope.posts[$index].rating += 1;
+        $scope.posts[$index].rating += 1;
+        console.log($scope.posts[$index].rating);
     }
     
     //TODO: Add downvote functionality to featured posts
