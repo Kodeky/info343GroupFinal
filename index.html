@@ -29,7 +29,8 @@
             <li><a ui-sref="profile">Profile</a></li>
             <li><a ui-sref="events">Events</a></li>
 			<div class="pull-right">
-                <li><a ng-click="login()" id="login">Login</a></li>
+                <li><a ng-click="login()" id="login" ng-show="!isLoggedIn">Login</a></li>
+                <li><a ng-click="logout()" id="logout" ng-show="isLoggedIn">Logout</a></li>
 			</div>  
 			
 		</nav>
