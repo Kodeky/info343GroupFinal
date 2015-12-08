@@ -22,6 +22,10 @@ app.config(function($stateProvider, $urlRouterProvider){
             url: '/events',
             templateUrl: "templates/events.html"
         })
+        .state('signup', {
+            url: '/signup',
+            templateUrl: "templates/signup.html"
+        })
 }).controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
     
     var ref = new Firebase("https://localsound.firebaseio.com");
