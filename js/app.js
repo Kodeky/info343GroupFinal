@@ -67,7 +67,9 @@ app.config(function($stateProvider, $urlRouterProvider){
     
     //Local method to add posts
     //TODO: change to add to firebase
-    $scope.addPost = function() {
+    $scope.inputLink;
+    $scope.addPost = function (inputLink) {
+        console.log($scope.inputLink);
         $scope.post = {
             username: "AboveandBeyond",
             full_name: "Above & Beyond",
@@ -79,6 +81,7 @@ app.config(function($stateProvider, $urlRouterProvider){
         }
         
         $scope.posts.push($scope.post);
+        console.log($scope.posts);
     }
       
     //TODO: Add upvote functionality to featured posts
@@ -129,6 +132,14 @@ app.config(function($stateProvider, $urlRouterProvider){
     	$scope.isVisible[$index] = !$scope.isVisible[$index];
 		$scope.isHidden[$index] = !$scope.isHidden[$index];
     }
+
+    $scope.showModal = false;
+    $scope.toggleModal = function () {
+        console.log("opened or closed new post modal");
+        $scope.showModal = !$scope.showModal;
+    }
+
+
 }])
 .controller("signupCtrl", ['$scope', 'profileData', function($scope, profileData) {
 
@@ -163,7 +174,50 @@ app.config(function($stateProvider, $urlRouterProvider){
             }
         })
     }
+
+
+
 }])
+.directive('modal', function () {
+    return {
+        template: '<div class="modal fade">' + 
+            '<div class="modal-dialog">' + 
+              '<div class="modal-content">' + 
+                '<div class="modal-header">' + 
+                  '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' + 
+                  '<h4 class="modal-title">{{ title }}</h4>' + 
+                '</div>' + 
+                '<div class="modal-body" ng-transclude></div>' + 
+              '</div>' + 
+            '</div>' + 
+          '</div>',
+        restrict: 'E',
+        transclude: true,
+        replace:true,
+        scope:true,
+        link: function postLink(scope, element, attrs) {
+            scope.title = attrs.title;
+
+            scope.$watch(attrs.visible, function(value){
+                if(value == true)
+                    $(element).modal('show');
+                else
+                    $(element).modal('hide');
+            });
+
+            $(element).on('shown.bs.modal', function(){
+                scope.$apply(function(){
+                    scope.$parent[attrs.visible] = true;
+                });
+            });
+
+            $(element).on('hidden.bs.modal', function(){
+                scope.$apply(function(){
+                    scope.$parent[attrs.visible] = false;
+                });
+            });
+        }
+    }})
 .factory('profileData', ['$firebaseArray', function($firebaseArray){
     var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Profiles");
     var ref = myFirebaseRef.push();
