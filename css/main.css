@@ -7,7 +7,8 @@
     padding-left: 0px;
 }
 
-/* nav {
+/*
+ nav {
     position: fixed;
     top: 0px;
     right: 0px;
@@ -17,7 +18,8 @@
     height: 48px;
     z-index: 1; 
     text-decoration: none;
-}*/
+}
+*/
 
     nav li {
         display: inline-block;
@@ -69,7 +71,7 @@
 
 #mainArea {
     width: 100%;
-    padding-top: 48px;
+/*    padding-top: 48px;*/
 }
 
 #leftContent {
@@ -80,7 +82,7 @@
 
 #centerContent {
     background-color: white; 
-    padding-top: 5px;
+    padding-top: 10px;
     height: 100%;
 }
 
@@ -144,4 +146,10 @@ img-wrapper img {
 .profile_posts {
     background-color: #9FC6D4;
     margin-bottom: 1em;
+}
+
+.eventContainer {
+    padding-bottom: 3em;
+    padding-left: 2em;
+    padding-right: 2em;
 }
