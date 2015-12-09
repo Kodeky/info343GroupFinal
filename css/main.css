@@ -7,7 +7,7 @@
     padding-left: 0px;
 }
 
-nav {
+/* nav {
     position: fixed;
     top: 0px;
     right: 0px;
@@ -17,7 +17,7 @@ nav {
     height: 48px;
     z-index: 1; 
     text-decoration: none;
-}
+}*/
 
     nav li {
         display: inline-block;
@@ -26,12 +26,12 @@ nav {
     nav a {
         font-family: "Lobster", sans-serif;
         font-size: 32px;
-        display: inline-block;
         height: 16px;
-        padding-right: .5em;
+		margin-top: .25em;
+        	padding-right: .5em;
 		padding-left: .5em;
 		padding-bottom: .5em;
-        float: left;
+		margin-bottom: 1em;
         color: white;
         text-decoration: none;
     }
@@ -44,7 +44,13 @@ nav {
         text-decoration: none;
         color: white; 
     }
-
+    .navbar-header {
+		margin-top: .7em;
+        	padding-right: .5em;
+		padding-left: .5em;
+		padding-bottom: .5em;
+		margin-bottom: 1em;
+    }
 
 /* for searchbar */
 #search {
