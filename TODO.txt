@@ -14,4 +14,4 @@ TODO:
         - Date/time
         
     - Activity feed feature
-    
+    - Add success animation for creating user, updating profile, logging out

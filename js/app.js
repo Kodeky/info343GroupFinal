@@ -32,14 +32,13 @@ app.config(function($stateProvider, $urlRouterProvider){
         })
 }).controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
     
-    var ref = new Firebase("https://localsound.firebaseio.com");
-                               
+    var authRef = new Firebase('https://localsound.firebaseio.com/web/uauth')
+    
     $scope.sortReverse  = false;  // resets/initilizes the default sort order
     $scope.isVisible = []; // resets/initilizes the array for show buttons
     $scope.isHidden = []; // resets/initilizes the array for hide buttons
     $scope.seletedIndex = -1; // resets/initilizes the username selected
     $scope.isLoggedIn = false; //resets/intitilzes logged in trigger
-
     
     //To test local data; will be replaced by firebase
     $scope.posts = [
@@ -93,25 +92,24 @@ app.config(function($stateProvider, $urlRouterProvider){
          $scope.posts[$index].rating -= 1;
     }
     
-    //Facebook OAuth login
-    $scope.login = function() { 
-        $scope.isLoggedIn = true;
-        //$scope.$digest();
-        /*
-        ref.authWithOAuthPopup("facebook", function(error, authData) {
-            if (error) {
-                alert("Login Failed!", error);
+    $scope.login = function(email, password) {     
+        authRef.authWithPassword({
+            email: email,
+            password: password
+        }, function(error, authData) {
+            if(error) {
+                console.log("Login Failed!", error);
+                deffered.reject(error);
             } else {
+                console.log(authData);
                 $scope.isLoggedIn = true;
-                $scope.$digest();
+                $scope.$apply();
             }
-        }, {
-            remember: "sessionOnly"
-        });
-        */
+        });  
     }
     
     $scope.logout = function() {
+        authRef.unauth();
         $scope.isLoggedIn = false;
     }
     
@@ -132,8 +130,48 @@ app.config(function($stateProvider, $urlRouterProvider){
 		$scope.isHidden[$index] = !$scope.isHidden[$index];
     }
 }])
+.controller("signupCtrl", ['$scope', 'profileData', function($scope, profileData) {
+
+    var ref = new Firebase('https://localsound.firebaseio.com/Profiles');
+    
+    $scope.confirmPassword = "";
+    $scope.registrationInfo = {};   
+    $scope.passwordMatch = function() {
+        
+        if(($scope.registrationInfo.password == $scope.confirmPassword) || $scope.confirmPassword == "") {
+            return true;
+        } else {
+            false
+        }
+    }
+    
+    $scope.createProfileData = function(authData) {
+        delete $scope.registrationInfo.password;
+        ref.child(authData.uid).set($scope.registrationInfo);
+    }
+    
+    $scope.register = function() {
+        ref.createUser({
+            email: $scope.registrationInfo.email,
+            password: $scope.registrationInfo.password
+        }, function(error, authData) {
+            if(error) {
+                console.log(error);
+            } else {
+                console.log("Success");
+                $scope.createProfileData(authData);
+            }
+        })
+    }
+}])
+.factory('profileData', ['$firebaseArray', function($firebaseArray){
+    var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Profiles");
+    var ref = myFirebaseRef.push();
+    
+    return $firebaseArray(ref);
+}])
 .factory('featuredPosts', ['$firebaseArray', function($firebaseArray) {
-    var myFirebase = new Firebase("https://localsound.firebaseio.com/");
+    var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Posts");
     var ref = myFirebaseRef.push();
     
     return $firebaseArray(ref);

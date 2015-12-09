@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" ng-controller="signupCtrl">
     <form role="form" name="signupForm" novalidate = "">
         <h1>Registration</h1>
         <div class="form-group css-form">
@@ -6,7 +6,7 @@
             <div class="invalidEntry" ng-show="signupForm.username.$touched">
 					<span ng-show="signupForm.lastName.$error.required">Please input a username!</span>
             </div>
-            <input type="text" name="username" class="form-control" ng-model="username" ng-required="true"/>
+            <input type="text" name="username" class="form-control" ng-model="registrationInfo.username" ng-required="true"/>
         </div>
         <div class="form-group css-form">
             	<label for="email">Email</label>
@@ -14,35 +14,39 @@
 						<span ng-show="signupForm.email.$error.required">Please input your email address</span>
 						<span ng-show="signupForm.email.$error.email">Please input a proper email address! For example: <i>example@domain.com</i></span>
 				</div>
-                <input type="email" class="form-control" name="email" placeholder="e.g. JohnDoe@Gmail.com" ng-model="email" required ng-required="true">
+                <input type="email" class="form-control" name="email" placeholder="e.g. JohnDoe@Gmail.com" ng-model="registrationInfo.email" required ng-required="true">
             </div>
         <div class="form-group css-form">
             <label for="email">Password:</label>
-            <input type="password" name="password" class="form-control" ng-model="password" ng-minlength="6" ng-required="true"/>
+            <div class="invalidEntry" ng-show="signupForm.password.$touched">
+                <span ng-show="signupForm.password.$error.minlength">Password must be 6 characters long</span>
+            </div>
+            <input type="password" name="password" class="form-control" ng-model="registrationInfo.password" ng-minlength="6" ng-required="true"/>
         </div>
         <div class="form-group css-form">
 				<label for="confirmpassword">Confirm Password</label>
 				<div class="invalidEntry">
-					<span ng-show="">Passwords don't match</span>
+					<span ng-show="!passwordMatch()">Passwords don't match</span>
 				</div>
-                <input type="password" class="form-control" name="confirmpassword"  ng-change="passwordMatch()" ng-model="confirmpassword" ng-required="true">
+                <input type="password" class="form-control" name="confirmPassword"  ng-change="passwordMatch()" ng-model="confirmPassword" ng-required="true">
         </div>    
         <div class="form-group css-form">
             <label for="Avatar">Avatar URL:</label>
-            <input type="text" name="avatar" class="form-control" ng-model="avatar"/>
+            <input type="url" name="avatar" class="form-control" ng-model="registrationInfo.avatarUrl"/>
         </div>
         <div class="form-group css-form">
             <label for="zip">Zip Code:</label>
             <div class="invalidEntry" ng-show="signupForm.zip.$touched">
-					<span ng-show="signupForm.zip.$error.required">Please input your zipcode</span>
+				<span ng-show="signupForm.zip.$error.required">Please input your zipcode</span>
+                <span ng-show="signupForm.zip.$error.pattern">Invalid Zip Code</span>
             </div>
-            <input type="text" name="zip" class="form-control" ng-model="zipcode" ng-maxlength="5" ng-required="true"/>
+            <input type="text" name="zip" class="form-control" ng-model="registrationInfo.zipcode" ng-pattern="/^(\d{5}-\d{4}|\d{5})$/" ng-required="true"/>
             
         </div>   
         
         <div class="form-group css-form">
             <label for="userType">User Type:</label>
-            <select name="userType" class="form-control" ng-model="userType">
+            <select name="userType" class="form-control" ng-model="registrationInfo.userType">
                 <option value="" disabled selected hidden>--Select User Type--</option>
                 <option value="artist">Artist</option>
                 <option value="listener">Listener</option>
@@ -52,11 +56,14 @@
         
         <div class="form-group css-form">
             <label for="soundcloudProfile">SoundCloud Profile URL</label>
-            <input type="text" class="form-control" name="soundcloudProfile" ng-model="soundcloudUrl" ng-required="true"/>
+            <div class="invalidEntry" ng-show="signupForm.soundcloudUrl.$touched">
+                <span ng-show="signupForm.soundcloudUrl.$error.url">Not a valid URL. Make sure to include: <b>http://</b></span>
+            </div>
+            <input type="url" class="form-control" name="soundcloudUrl" ng-model="registrationInfo.soundcloudUrl" ng-required="true"/>
         </div>
         
         <div class="form-group">
-            <button type="submit" class="btn btn-primary form-control" ng-disabled="signupForm.$invalid">Register</button>
+            <button type="submit" class="btn btn-primary form-control" ng-disabled="signupForm.$invalid" ng-click=register()>Register</button>
         </div>
     </form>
 </div>
