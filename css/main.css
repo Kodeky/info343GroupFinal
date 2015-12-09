@@ -112,6 +112,10 @@ footer {
     background-color: #468094;
 }
 
+.css-form input.ng-invalid.ng-touched {
+    background-color: #FA787E;
+}
+
 #footer p {
     margin: 0 0 0 0;
 }
