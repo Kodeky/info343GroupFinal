@@ -136,7 +136,6 @@ app.config(function($stateProvider, $urlRouterProvider){
     
     $scope.confirmPassword = "";
     $scope.registrationInfo = {};   
-    $scope.profileData = profileData;
     $scope.passwordMatch = function() {
         
         if(($scope.registrationInfo.password == $scope.confirmPassword) || $scope.confirmPassword == "") {
@@ -148,7 +147,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     
     $scope.createProfileData = function(authData) {
         delete $scope.registrationInfo.password;
-        $scope.profileData.child(authData.uid).set($scope.registrationInfo);
+        ref.child(authData.uid).set($scope.registrationInfo);
     }
     
     $scope.register = function() {
