@@ -135,3 +135,9 @@ img-wrapper img {
     background-color: #9FC6D4;
     margin-bottom: 1em;
 }
+
+.eventContainer {
+    padding-bottom: 3em;
+    padding-left: 2em;
+    padding-right: 2em;
+}

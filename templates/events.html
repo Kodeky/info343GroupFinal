@@ -1,0 +1,43 @@
+<div class="eventContainer">
+    <form role="form">
+        <h1>Create a Sponsored Event</h1>
+        <div class="form-group">
+            <label for="city">City:</label>
+            <input type="text" name="city" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="title">Event Title:</label>
+            <input type="text" name="title" class="form-control" />
+        </div>
+        <div class="form-group">
+            <div class="form-group">
+                <label for="comment">Event Description:</label>
+                <textarea ng-required class="form-control" rows="5" id="comment"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+          <label for="date">Event date and time:</label>
+          <input type="datetime-local" name="bdaytime" id="date" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="externalLink">Link to external event website (optional)</label>
+            <input type="text" class="form-control" name="externalLink" placeholder="www.event.com"/>
+        </div>
+        <div class="form-group">
+          <label for="sel1">How long would you like to display the event? ($25/day) </label>
+          <select class="form-control" id="sel1">
+            <option>1 day</option>
+            <option>2 days</option>
+            <option>3 days</option>
+            <option>4 days</option>
+            <option>5 days</option>
+            <option>6 days</option>
+            <option>1 week</option>
+            <option>2 weeks</option>
+          </select>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default form-control">Register</button>
+        </div>
+    </form>
+</div>
