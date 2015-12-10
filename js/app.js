@@ -72,10 +72,12 @@ app.config(function($stateProvider, $urlRouterProvider){
     $scope.addPost = function () {
         $scope.inputLink = document.getElementById("scLink").value;
         console.log($scope.inputLink);
-
+        var authData = $cookies.getObject('firebaseAuth');
+        var profile = Profile(authData.uid)
+        $scope.user = profile
+    
         $scope.post = {
-            username: "AboveandBeyond",
-            full_name: "Above & Beyond",
+            username: user.username,
             rating: 0,
             post_date: Date(),
             soundcloud_url: $scope.inputLink
@@ -83,6 +85,7 @@ app.config(function($stateProvider, $urlRouterProvider){
         }
         
         $scope.posts.push($scope.post);
+        $scope.$apply();
         console.log($scope.posts);
     }
       
