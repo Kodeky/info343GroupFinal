@@ -30,7 +30,7 @@ app.config(function($stateProvider, $urlRouterProvider){
             url: '/login',
         templateUrl: "templates/login.html"
         })
-}).controller("localSoundCtrl", ['$scope', '$http', '$sce', '$window', '$cookies', function ($scope, $http, $sce, $window, $cookies) {
+}).controller("localSoundCtrl", ['$scope', '$http', '$sce', '$window', '$cookies', 'Profile', function ($scope, $http, $sce, $window, $cookies, Profile) {
     
     var authRef = new Firebase('https://localsound.firebaseio.com/web/uauth')
     
