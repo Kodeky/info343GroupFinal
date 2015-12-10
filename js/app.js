@@ -43,20 +43,24 @@ app.config(function($stateProvider, $urlRouterProvider){
     //To test local data; will be replaced by firebase
     $scope.posts = [
         {
+            avatar: 'https://i1.sndcdn.com/avatars-000191323296-4g1un5-t500x500.jpg',
+            username: "Tiesto",
+            full_name: "Tiesto",
+            rating: 0,
+            post_date: Date(),
+            soundcloud_url: "https://soundcloud.com/tiesto"
+        },
+        {
+            avatar: "https://i1.sndcdn.com/avatars-000192555351-8giqiz-t500x500.jpg",
             username: "AboveandBeyond",
             full_name: "Above & Beyond",
             rating: 4,
             post_date: Date(),
             soundcloud_url: "https://soundcloud.com/aboveandbeyond"
-        },
-        {
-            username: "Tiesto",
-            full_name: "Tiesto",
-            rating: 2,
-            post_date: Date(),
-            soundcloud_url: "https://soundcloud.com/tiesto"
         }
+
     ];
+    
     
     //Initializes Show and hide for posts
     for (var i=0; i<$scope.posts.length; i++) {
