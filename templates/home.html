@@ -4,30 +4,29 @@
             <div id="events" ng-repeat="event in events | limitTo:10">
                 <h3>{{eventObject.title}}</h3>
                 
-            
+                <!-- Show current events -->
+                <div ng-controller="newEventCtrl">
+                    <!-- Use ng-repeat directive to repeat a div for each element in chirps -->
+                    <!-- order by time (in reverse chronological order) -->
+                    <div class="event-box" ng-repeat="event in Events">
+                        <div id="eventList">
+                            <p>{{event.city}}</p>
+                            <!-- This is an img tag that shows the userImage of that chirp. -->
+                            <!-- Note we access the avatar from the users object -->
+<!--                            <img class="image" ng-src="{{users[chirp.userId].avatar}}"></img>-->
+
+                            <!-- Use an expressions to show the handle and time of tweet -->
+                            <!-- format the time as a 'medium' -->
+<!--                            <span class="handle"> do this after auth </span>-->
+<!--                            <span class="time">{{chirp.time | date: 'medium'}}</span>-->
+                        </div>
+
+                        <!-- Use an expression to show the text of the tweet -->
+<!--                        <div class="tweet">{{chirp.text}}</div>-->
+                    </div>
+                </div> <!-- end shown results -->
             
             </div>
-            
-        
-<!--
-                        <table class="table">
-                            <tr>
-                                <th>Avatar</th>
-                                <th>Rating</th>
-                                <th>Username</th>
-                                <th>Date Posted</th>
-                                <th>SoundCloud Player</th>
-                            </tr>
-                
-                            <tr ng-repeat="post in posts | orderBy:post_date | limitTo:10">
-                            <td>
-                                {{post.rating}}
-                            </td>
-                            <td>{{post.username}}</td>
-                            <td>{{post.post_date | fDate:"MM/dd/yyyy 'at' h:mma"}}</td>
-                          </tr>
-                        </table>
--->
     </div>
         
         <div id="centerContent" class="col-md-6 col-sm-6" class="container">
