@@ -40,6 +40,7 @@
               </ul>
               
             <ul class="nav navbar-nav navbar-right">
+                <li><a ng-click="toggleModal()" id="newPostButton" ng-show="!isLoggedIn">New Post</a></li>
                 <li><a ui-sref="signup" id="login" ng-show="!isLoggedIn">Sign-Up</a></li>
                 <li><a id="login" ng-show="!isLoggedIn" ui-sref="login">Login</a></li>
                 <li><a ng-click="logout()" id="logout" ng-show="isLoggedIn" href="">Logout</a></li>
@@ -50,6 +51,19 @@
 
 
     </header>
+
+
+<!-- New Song Post Form -->
+ <modal title="New Post" visible="showModal">
+    <form name="newPostForm" role="form">
+      <div class="form-group">
+        <label for="url">SoundCloud Link</label>
+        <input type="url" class="form-control" id="scLink" ng-model="inputLink" placeholder="E.G. https://soundcloud.com/aboveandbeyond" />
+      </div>
+      <button type="submit" class="btn btn-default" ng-click=addPost(inputLink)>Submit</button>
+    </form>
+  </modal>
+
     <section id="mainArea" ui-view class="pageBody">
             
     </section>
