@@ -1,10 +1,10 @@
 <div class="eventContainer" ng-controller="newEventCtrl" id="centerContent">
-    <form role="form" name="eventForm" novalidate = "">
+    <form role="form" name="eventForm" novalidate="">
         <h1>Create a Sponsored Event</h1>
         <div class="form-group">
             <label for="city">City:</label>
             <div class="invalidEntry" ng-show="eventForm.username.$touched">
-				<span ng-show="eventForm.city.$error.required">Please input a city!
+                <span ng-show="eventForm.city.$error.required">Please input a city!
                 </span>
             </div>
             <input type="text" name="city" class="form-control" ng-model="eventObject.city">
@@ -20,41 +20,41 @@
             </div>
         </div>
         <div class="form-group">
-          <label for="date">Event date and time:</label>
-          <input type="datetime-local" name="bdaytime" id="date" class="form-control" ng-model="eventObject.dateTime">
+            <label for="date">Event date and time:</label>
+            <input type="datetime-local" name="bdaytime" id="date" class="form-control" ng-model="eventObject.dateTime">
         </div>
         <div class="form-group">
             <label for="externalLink">Link to external event website (optional)</label>
             <input type="text" class="form-control" name="externalLink" placeholder="www.event.com" ng-model="eventObject.link">
         </div>
         <div class="form-group">
-          <label for="sel1">How long would you like to display the event? ($25/day) </label>
-          <select class="form-control" id="sel1" ng-model="eventObject.duration">
-            <option>1 day</option>
-            <option>2 days</option>
-            <option>3 days</option>
-            <option>4 days</option>
-            <option>5 days</option>
-            <option>6 days</option>
-            <option>1 week</option>
-            <option>2 weeks</option>
-          </select>
+            <label for="sel1">How long would you like to display the event? ($25/day) </label>
+            <select class="form-control" id="sel1" ng-model="eventObject.duration">
+                <option>1 day</option>
+                <option>2 days</option>
+                <option>3 days</option>
+                <option>4 days</option>
+                <option>5 days</option>
+                <option>6 days</option>
+                <option>1 week</option>
+                <option>2 weeks</option>
+            </select>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-default form-control" ng-click=createEvent()>Purchase</button>
+            <button type="submit" class="btn btn-default form-control" ng-click="createEvent()">Purchase</button>
         </div>
-        
-        
+
+
         <h1>{{$scope.childData.body}}</h1>
-        
+
         <div id="events" ng-controller="newEventCtrl" ng-repeat="event in $scope.childData | limitTo:10">
-                <h3>{{event.title}}</h3>
-                
-                
-            
+            <h3>{{event.title}}</h3>
+
+
+
         </div>
-        
-        
-        
+
+
+
     </form>
 </div>
