@@ -38,14 +38,13 @@ app.config(function($stateProvider, $urlRouterProvider){
     $scope.isVisible = []; // resets/initilizes the array for show buttons
     $scope.isHidden = []; // resets/initilizes the array for hide buttons
     $scope.seletedIndex = -1; // resets/initilizes the username selected
-    $scope.isLoggedIn = $cookies.get('firebaseAuth') != null ? true : false; //resets/intitilzes logged in trigger
+    $scope.isLoggedIn = $cookies.getObject('firebaseAuth') != null ? true : false; //resets/intitilzes logged in trigger
     
     //To test local data; will be replaced by firebase
     $scope.posts = [
         {
             username: "AboveandBeyond",
             full_name: "Above & Beyond",
-            track_count: 0,
             rating: 0,
             post_date: Date(),
             soundcloud_url: "https://soundcloud.com/aboveandbeyond"
@@ -53,7 +52,6 @@ app.config(function($stateProvider, $urlRouterProvider){
         {
             username: "Tiesto",
             full_name: "Tiesto",
-            track_count: 0,
             rating: 0,
             post_date: Date(),
             soundcloud_url: "https://soundcloud.com/tiesto"
@@ -74,7 +72,6 @@ app.config(function($stateProvider, $urlRouterProvider){
         $scope.post = {
             username: "AboveandBeyond",
             full_name: "Above & Beyond",
-            track_count: 0,
             rating: 0,
             post_date: Date(),
             soundcloud_url: $scope.inputLink
@@ -105,7 +102,8 @@ app.config(function($stateProvider, $urlRouterProvider){
                 console.log("Login Failed!", error);
                 deffered.reject(error);
             } else {
-                $cookies.put('firebaseAuth', authData);
+    
+                $cookies.putObject('firebaseAuth', authData);
                 $scope.isLoggedIn = true;
                 $scope.$apply();
                 $window.location.href = '/';
@@ -116,7 +114,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     $scope.logout = function() {
         authRef.unauth();
         $cookies.remove('firebaseAuth');
-        $scope.$apply();
+        $window.location.href = '/';
     }
     
     //Loads featured info
@@ -161,6 +159,8 @@ app.config(function($stateProvider, $urlRouterProvider){
     
     $scope.createProfileData = function(authData) {
         delete $scope.registrationInfo.password;
+        $scope.registrationInfo.numPosts = 0;
+        $scope.registrationInfo.posts = {};
         ref.child(authData.uid).set($scope.registrationInfo);
     }
     
@@ -181,6 +181,24 @@ app.config(function($stateProvider, $urlRouterProvider){
 
 
 
+}])
+.controller('profileCtrl', ['$scope', '$cookies', 'Profile', function($scope, $cookies, Profile) {
+    var authData = $cookies.getObject('firebaseAuth');
+    var profile = Profile(authData.uid)
+    $scope.user = profile
+    profile.$loaded().then(function(response) {
+          console.log($scope.user.email);
+    });
+  
+    
+    $scope.saveProfile = function() {
+      $scope.user.$save().then(function() {
+        alert('Profile saved!');
+      }).catch(function(error) {
+        alert('Error!');
+      });
+    };
+    
 }])
 .controller("newEventCtrl", ['$scope', 'eventData', function($scope, eventData) {
 
@@ -245,12 +263,17 @@ app.config(function($stateProvider, $urlRouterProvider){
             });
         }
     }})
-.factory('profileData', ['$firebaseArray', function($firebaseArray){
-    var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Profiles");
-    var ref = myFirebaseRef.push();
-    
-    return $firebaseArray(ref);
-}])
+.factory("Profile", ["$firebaseObject",function($firebaseObject) {
+    return function(id) {
+      // create a reference to the database node where we will store our data
+      var ref = new Firebase("https://localsound.firebaseio.com/Profiles");
+      var profileRef = ref.child(id);
+
+      // return it as a synchronized object
+      return $firebaseObject(profileRef);
+    }
+  }
+])
 .factory('featuredPosts', ['$firebaseArray', function($firebaseArray) {
     var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Posts");
     var ref = myFirebaseRef.push();

@@ -49,7 +49,6 @@
                             <th><a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse">Rating</a></th>
                             <th><a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse">Username</a></th>
                             <th><a href="" ng-click="sortType = 'full_name'; sortReverse = !sortReverse">Full Name</a></th>
-                            <th><a href="" ng-click="sortType = 'track_count'; sortReverse = !sortReverse">Track Count</a></th>
                             <th><a href="" ng-click="sortType = 'post_date'; sortReverse = !sortReverse">Date Posted</a></th>
                             <th>SoundCloud Player</th>
                           </tr>
@@ -63,7 +62,6 @@
                         </td>
                         <td>{{post.username}}</td>
                         <td>{{post.full_name}}</td>
-                        <td>{{post.track_count}}</td>
                         <td>{{post.post_date | fDate:"MM/dd/yyyy 'at' h:mma"}}</td>
                         <td>
                           <div class="infoWrapper"><!-- Shows button corresponding to the Soundcloud player frame-->
