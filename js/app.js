@@ -30,9 +30,10 @@ app.config(function($stateProvider, $urlRouterProvider){
             url: '/login',
         templateUrl: "templates/login.html"
         })
-}).controller("localSoundCtrl", ['$scope', '$http', '$sce', '$window', '$cookies', 'Profile', function ($scope, $http, $sce, $window, $cookies, Profile) {
+}).controller("localSoundCtrl", ['$scope', '$http', '$sce', '$window', '$cookies', 'Profile', 'Posts', function ($scope, $http, $sce, $window, $cookies, Profile, Posts) {
     
-    var authRef = new Firebase('https://localsound.firebaseio.com/web/uauth')
+    var authRef = new Firebase('https://localsound.firebaseio.com/web/uauth');
+    var ref = new Firebase('https://localsound.firebaseio.com');
     
     $scope.sortReverse  = false;  // resets/initilizes the default sort order
     $scope.isVisible = []; // resets/initilizes the array for show buttons
@@ -41,6 +42,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     $scope.isLoggedIn = false; //resets/intitilzes logged in trigger
     
     //To test local data; will be replaced by firebase
+<<<<<<< HEAD
     $scope.posts = [
         {
             avatar: 'https://i1.sndcdn.com/avatars-000191323296-4g1un5-t500x500.jpg',
@@ -67,10 +69,10 @@ app.config(function($stateProvider, $urlRouterProvider){
             post_date: Date(),
             soundcloud_url: "https://soundcloud.com/tiesto"
         }
+=======
+    $scope.posts = Posts;
+>>>>>>> master
 
-    ];
-    
-    
     //Initializes Show and hide for posts
     for (var i=0; i<$scope.posts.length; i++) {
         $scope.isVisible[i] = 'true'    ;    
@@ -78,24 +80,22 @@ app.config(function($stateProvider, $urlRouterProvider){
     
     //Local method to add posts
     //TODO: change to add to firebase
-    $scope.addPost = function () {
+    $scope.addPost = function() {
         $scope.inputLink = document.getElementById("scLink").value;
-        console.log($scope.inputLink);
         var authData = $cookies.getObject('firebaseAuth');
-        var profile = Profile(authData.uid)
-        $scope.user = profile
-    
-        $scope.post = {
-            username: user.username,
+        ref.child("Posts").push({
+            uid: authData.uid,
             rating: 0,
-            post_date: Date(),
-            soundcloud_url: $scope.inputLink
-            //location : $scope.getLocation()
-        }
-        
-        $scope.posts.push($scope.post);
-        $scope.$apply();
-        console.log($scope.posts);
+            soundcloud_url: $scope.inputLink,
+            dateTime: Date()
+
+        }, function(error, eData) {
+            if(error) {
+                console.log(error);
+            } else {
+                console.log("Success");
+            }
+        })
     }
       
     //TODO: Add upvote functionality to featured posts
@@ -149,7 +149,6 @@ app.config(function($stateProvider, $urlRouterProvider){
 
     $scope.showModal = false;
     $scope.toggleModal = function () {
-        console.log("opened or closed new post modal");
         $scope.showModal = !$scope.showModal;
     }
 
@@ -161,6 +160,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     
     $scope.confirmPassword = "";
     $scope.registrationInfo = {};   
+    
     $scope.passwordMatch = function() {
         
         if(($scope.registrationInfo.password == $scope.confirmPassword) || $scope.confirmPassword == "") {
@@ -214,6 +214,15 @@ app.config(function($stateProvider, $urlRouterProvider){
             }
         })
     }
+    
+//    $scope.events1 = eventData;
+//    eventData.$loaded().then(function() {
+//        angular.forEach($scope.events1, function(event, index) {
+//            
+//        }
+//    }
+    
+    
     
     ref.on("value", function(snapshot) {
         $scope.eventArray = (snapshot.val());
@@ -274,18 +283,17 @@ app.config(function($stateProvider, $urlRouterProvider){
     
     return $firebaseArray(ref);
 }])
-.factory('featuredPosts', ['$firebaseArray', function($firebaseArray) {
-    var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Posts");
-    var ref = myFirebaseRef.push();
-    
-    return $firebaseArray(ref);
-}])
-.factory('eventData', ['$firebaseArray', function($firebaseArray){
-    var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Events");
-    var ref = myFirebaseRef.push();
-    
-    return $firebaseArray(ref);
-}])
+.factory("Profile", ["$firebaseObject",function($firebaseObject) {
+    return function(id) {
+      // create a reference to the database node where we will store our data
+      var ref = new Firebase("https://localsound.firebaseio.com/Profiles");
+      var profileRef = ref.child(id);
+
+      // return it as a synchronized object
+      return $firebaseObject(profileRef);
+    }
+  }
+])
 .filter('fDate', [
     '$filter', function($filter) {
         return function(input, format) {

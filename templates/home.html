@@ -1,53 +1,28 @@
-<section id="home" class="row">
-                        <div  class="info" ng-bind-html="trustPlayer">
-                    </div>   
-    <div id="leftContent" class="col-md-3 col-sm-3 collapse in">
+<section id="home" class="row row-centered">
+    
+
+    
+    <div class="container" id ="scContainer">
+        <div class="info" ng-bind-html="trustPlayer"></div><!-- soundcloud player-->
+    </div>   
+
+        <div class="welcomeText">
+            Welcome To LocalSound
+            <br /><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-right" aria-hidden="true">
+        </div>
+
+    <div id="leftContent" class="col-md-3 col-sm-3 col-centered collapse in">
         <h1 id="header">Featured Events </h1>
         
-        <div id="filler">
-            <h3>Benefit Concert</h3>
-            <p>12/20 9:00pm</p>
-            <p>Come to Neumo's in capitol hill for a free benefit concert! Donations will be accepted at the door.</p>
-            <a href="http://www.neumos.com">Neumo's</a>
-            
-            <h3>ASUW Show</h3>
-            <p>1/18 3:30pm</p>
-            <p>Check out the concert on Rainier Vista coming up featuring Unknown Mortal Orchestra, STRFKR and more.</p>
-            <a href="http://www.asuw.org">ASUW</a>
-            
-            <h3>House Party</h3>
-            <p>12/31 9:30pm</p>
-            <p>We're having an open house on new year's featuring a few DJ's that go to UW. $5 to get in! </p>
-        </div>
-            <div id="events" ng-repeat="event in events | limitTo:10">
-                <h3>{{eventObject.title}}</h3>
+            <div id="events" ng-controller="newEventCtrl" ng-repeat="event in $scope.eventArray | limitTo:10">
+                <h3>{{event.title}}</h3>
                 
-                <!-- Show current events -->
-                <div ng-controller="newEventCtrl">
-                    <!-- Use ng-repeat directive to repeat a div for each element in chirps -->
-                    <!-- order by time (in reverse chronological order) -->
-                    <div class="event-box" ng-repeat="event in Events">
-                        <div id="eventList">
-                            <p>{{event.city}}</p>
-                            <!-- This is an img tag that shows the userImage of that chirp. -->
-                            <!-- Note we access the avatar from the users object -->
-<!--                            <img class="image" ng-src="{{users[chirp.userId].avatar}}"></img>-->
-
-                            <!-- Use an expressions to show the handle and time of tweet -->
-                            <!-- format the time as a 'medium' -->
-<!--                            <span class="handle"> do this after auth </span>-->
-<!--                            <span class="time">{{chirp.time | date: 'medium'}}</span>-->
-                        </div>
-
-                        <!-- Use an expression to show the text of the tweet -->
-<!--                        <div class="tweet">{{chirp.text}}</div>-->
-                    </div>
-                </div> <!-- end shown results -->
+                
             
             </div>
     </div>
      
-        <div id="centerContent" class="col-md-5 col-sm-5" class="container">
+        <div id="centerContent" class="col-md-5 col-sm-5 col-centered" class="container">
               <div class="tab-content">
                 <div class="tab-pane active" id="featured">
                   <h1>Featured Songs</h1>
@@ -109,7 +84,7 @@
                 </div>
             </div>
             
-            <div id="rightContent" class="col-md-4 col-sm-4 collapse in">
+            <div id="rightContent" class="col-md-4 col-sm-4 col-centered collapse in">
                 <h1 id="header">Activity</h1>
                     <table class="table">
                             <tr>
