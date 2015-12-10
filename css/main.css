@@ -61,7 +61,7 @@
 }
 
 #leftContent {
-    background-color: aliceblue; 
+    background-color: #ccf2ff;
     padding-top: 10px;
     height: 100%;
 }
@@ -77,7 +77,7 @@
 }
 
 #rightContent {
-    background-color: aliceblue; 
+    background-color: #ccf2ff; 
     padding-top: 10px;
     height: 100%;
 }
