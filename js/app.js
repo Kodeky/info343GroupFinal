@@ -67,16 +67,17 @@ app.config(function($stateProvider, $urlRouterProvider){
     
     //Local method to add posts
     //TODO: change to add to firebase
-    $scope.inputLink;
-    $scope.addPost = function (inputLink) {
+    $scope.addPost = function () {
+        $scope.inputLink = document.getElementById("scLink").value;
         console.log($scope.inputLink);
+
         $scope.post = {
             username: "AboveandBeyond",
             full_name: "Above & Beyond",
             track_count: 0,
             rating: 0,
             post_date: Date(),
-            soundcloud_url: "https://soundcloud.com/aboveandbeyond"
+            soundcloud_url: $scope.inputLink
             //location : $scope.getLocation()
         }
         
@@ -178,7 +179,7 @@ app.config(function($stateProvider, $urlRouterProvider){
 
 
 }])
-.controller("newEventCtrl", ['$scope', 'eventData', function($scope, eventData) {
+.controller("newEventCtrl", ['$scope', 'eventData', '$firebaseObject', function($scope, eventData, $firebaseObject) {
 
     var ref = new Firebase('https://localsound.firebaseio.com/Events');
     
@@ -200,6 +201,19 @@ app.config(function($stateProvider, $urlRouterProvider){
             }
         })
     }
+    
+    ref.on("value", function(snapshot) {
+        $scope.eventArray = (snapshot.val());
+        console.log($scope.eventArray);
+//        for (Object in eventArray) {
+//            $('#eventList').append("<div id='title'>" + Object.title + "</div>");
+//        }
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+    });
+    
+    /* create a $firebaseArray for the event reference and add to scope */
+	$scope.events = $firebaseObject(ref);
 }])
 .directive('modal', function () {
     return {
