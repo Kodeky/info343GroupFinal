@@ -116,7 +116,7 @@ footer {
     margin-bottom: 1em;
 }
 
-img-wrapper img {
+.img-wrapper img {
     height: 200px;
     width: 200px;
 }
@@ -127,7 +127,7 @@ img-wrapper img {
 }
 
 .profile_posts {
-    background-color: #9FC6D4;
+    background-color: aliceblue;
     margin-bottom: 1em;
 }
 

@@ -9,7 +9,8 @@
 	<title>localSound</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-sanitize.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-sanitize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-cookies.min.js"></script>
 	<script src="js/app.js"></script>
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
@@ -35,15 +36,15 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
               <ul class="nav navbar-nav">
-                <li><a ui-sref="profile">Profile</a></li>
+                <li ng-show="isLoggedIn"><a ui-sref="profile">Profile</a></li>
                 <li><a ui-sref="events">Events</a></li>
               </ul>
               
             <ul class="nav navbar-nav navbar-right">
-                <li><a ng-click="toggleModal()" id="newPostButton" ng-show="!isLoggedIn">New Post</a></li>
-                <li><a ui-sref="signup" id="login" ng-show="!isLoggedIn">Sign-Up</a></li>
-                <li><a id="login" ng-show="!isLoggedIn" ui-sref="login">Login</a></li>
-                <li><a ng-click="logout()" id="logout" ng-show="isLoggedIn" href="">Logout</a></li>
+                <li ng-show="isLoggedIn"><a ng-click="toggleModal()" id="newPostButton" >New Post</a></li>
+                <li ng-show="!isLoggedIn"><a ui-sref="signup" id="login" >Sign-Up</a></li>
+                <li ng-show="!isLoggedIn"><a id="login"  ui-sref="login">Login</a></li>
+                <li ng-show="isLoggedIn"><a ng-click="logout()" id="logout"  href="">Logout</a></li>
 			</ul> 
             </div>
           </div>
