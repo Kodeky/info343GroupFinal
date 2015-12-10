@@ -164,6 +164,29 @@ app.config(function($stateProvider, $urlRouterProvider){
         })
     }
 }])
+.controller("newEventCtrl", ['$scope', 'eventData', function($scope, eventData) {
+
+    var ref = new Firebase('https://localsound.firebaseio.com/Events');
+    
+    $scope.eventObject = {};   
+    
+    $scope.createEvent = function() {
+        ref.push({
+            city: $scope.eventObject.city,
+            title: $scope.eventObject.title,
+            body: $scope.eventObject.body,
+            dateTime: $scope.eventObject.dateTime.toString(),
+            link: $scope.eventObject.link,
+            duration: $scope.eventObject.duration
+        }, function(error, eData) {
+            if(error) {
+                console.log(error);
+            } else {
+                console.log("Success");
+            }
+        })
+    }
+}])
 .factory('profileData', ['$firebaseArray', function($firebaseArray){
     var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Profiles");
     var ref = myFirebaseRef.push();
@@ -172,6 +195,12 @@ app.config(function($stateProvider, $urlRouterProvider){
 }])
 .factory('featuredPosts', ['$firebaseArray', function($firebaseArray) {
     var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Posts");
+    var ref = myFirebaseRef.push();
+    
+    return $firebaseArray(ref);
+}])
+.factory('eventData', ['$firebaseArray', function($firebaseArray){
+    var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Events");
     var ref = myFirebaseRef.push();
     
     return $firebaseArray(ref);
