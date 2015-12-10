@@ -45,14 +45,14 @@ app.config(function($stateProvider, $urlRouterProvider){
         {
             username: "AboveandBeyond",
             full_name: "Above & Beyond",
-            rating: 0,
+            rating: 4,
             post_date: Date(),
             soundcloud_url: "https://soundcloud.com/aboveandbeyond"
         },
         {
             username: "Tiesto",
             full_name: "Tiesto",
-            rating: 0,
+            rating: 2,
             post_date: Date(),
             soundcloud_url: "https://soundcloud.com/tiesto"
         }
@@ -83,14 +83,13 @@ app.config(function($stateProvider, $urlRouterProvider){
     }
       
     //TODO: Add upvote functionality to featured posts
-    $scope.upVote = function() {
-        $scope.posts[$index].rating += 1;
-        console.log($scope.posts[$index].rating);
+    $scope.upVote = function(index) {
+        $scope.posts[index].rating += 1;
     }
     
     //TODO: Add downvote functionality to featured posts
-    $scope.downVote = function() {
-         $scope.posts[$index].rating -= 1;
+    $scope.downVote = function(index) {
+         $scope.posts[index].rating -= 1;
     }
     
     $scope.login = function(email, password) {     
