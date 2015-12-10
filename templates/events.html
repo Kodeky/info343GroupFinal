@@ -43,5 +43,18 @@
         <div class="form-group">
             <button type="submit" class="btn btn-default form-control" ng-click=createEvent()>Purchase</button>
         </div>
+        
+        
+        <h1>{{$scope.childData.body}}</h1>
+        
+        <div id="events" ng-controller="newEventCtrl" ng-repeat="event in $scope.childData | limitTo:10">
+                <h3>{{event.title}}</h3>
+                
+                
+            
+        </div>
+        
+        
+        
     </form>
 </div>

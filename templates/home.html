@@ -14,8 +14,8 @@
     <div id="leftContent" class="col-md-3 col-sm-3 col-centered collapse in">
         <h1 id="header">Featured Events </h1>
         
-            <div id="events" ng-controller="newEventCtrl" ng-repeat="event in $scope.eventArray | limitTo:10">
-                <h3>{{event.title}}</h3>
+            <div id="events" ng-controller="newEventCtrl" ng-repeat="event in $scope.events | limitTo:10">
+                <h3>{{$scope.events.title}}</h3>
                 
                 
             
