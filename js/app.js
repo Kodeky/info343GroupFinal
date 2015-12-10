@@ -5,7 +5,7 @@ var SOUNDCLOUD_CLIENT_ID = '3a0c15409a6b0e2610d61620155a549c';
 
 var FACEBOOK_APP_ID = '1676203739293367';
 
-var app = angular.module("localSoundApp", ['ngSanitize', 'firebase', "ui.router", 'ngCookies']);
+var app = angular.module("localSoundApp", ['ngSanitize', 'firebase', "ui.router"]);
 
 app.config(function($stateProvider, $urlRouterProvider){
     $urlRouterProvider.otherwise('/');
@@ -30,7 +30,7 @@ app.config(function($stateProvider, $urlRouterProvider){
             url: '/login',
         templateUrl: "templates/login.html"
         })
-}).controller("localSoundCtrl", ['$scope', '$http', '$sce', '$window', '$cookies', function ($scope, $http, $sce, $window, $cookies) {
+}).controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
     
     var authRef = new Firebase('https://localsound.firebaseio.com/web/uauth')
     
@@ -38,21 +38,23 @@ app.config(function($stateProvider, $urlRouterProvider){
     $scope.isVisible = []; // resets/initilizes the array for show buttons
     $scope.isHidden = []; // resets/initilizes the array for hide buttons
     $scope.seletedIndex = -1; // resets/initilizes the username selected
-    $scope.isLoggedIn = $cookies.getObject('firebaseAuth') != null ? true : false; //resets/intitilzes logged in trigger
+    $scope.isLoggedIn = false; //resets/intitilzes logged in trigger
     
     //To test local data; will be replaced by firebase
     $scope.posts = [
         {
             username: "AboveandBeyond",
             full_name: "Above & Beyond",
-            rating: 4,
+            track_count: 0,
+            rating: 0,
             post_date: Date(),
             soundcloud_url: "https://soundcloud.com/aboveandbeyond"
         },
         {
             username: "Tiesto",
             full_name: "Tiesto",
-            rating: 2,
+            track_count: 0,
+            rating: 0,
             post_date: Date(),
             soundcloud_url: "https://soundcloud.com/tiesto"
         }
@@ -72,6 +74,7 @@ app.config(function($stateProvider, $urlRouterProvider){
         $scope.post = {
             username: "AboveandBeyond",
             full_name: "Above & Beyond",
+            track_count: 0,
             rating: 0,
             post_date: Date(),
             soundcloud_url: $scope.inputLink
@@ -83,13 +86,14 @@ app.config(function($stateProvider, $urlRouterProvider){
     }
       
     //TODO: Add upvote functionality to featured posts
-    $scope.upVote = function(index) {
-        $scope.posts[index].rating += 1;
+    $scope.upVote = function() {
+        $scope.posts[$index].rating += 1;
+        console.log($scope.posts[$index].rating);
     }
     
     //TODO: Add downvote functionality to featured posts
-    $scope.downVote = function(index) {
-         $scope.posts[index].rating -= 1;
+    $scope.downVote = function() {
+         $scope.posts[$index].rating -= 1;
     }
     
     $scope.login = function(email, password) {     
@@ -101,19 +105,16 @@ app.config(function($stateProvider, $urlRouterProvider){
                 console.log("Login Failed!", error);
                 deffered.reject(error);
             } else {
-    
-                $cookies.putObject('firebaseAuth', authData);
+                console.log(authData);
                 $scope.isLoggedIn = true;
                 $scope.$apply();
-                $window.location.href = '/';
             }
         });  
     }
     
     $scope.logout = function() {
         authRef.unauth();
-        $cookies.remove('firebaseAuth');
-        $window.location.href = '/';
+        $scope.isLoggedIn = false;
     }
     
     //Loads featured info
@@ -158,8 +159,6 @@ app.config(function($stateProvider, $urlRouterProvider){
     
     $scope.createProfileData = function(authData) {
         delete $scope.registrationInfo.password;
-        $scope.registrationInfo.numPosts = 0;
-        $scope.registrationInfo.posts = {};
         ref.child(authData.uid).set($scope.registrationInfo);
     }
     
@@ -173,7 +172,6 @@ app.config(function($stateProvider, $urlRouterProvider){
             } else {
                 console.log("Success");
                 $scope.createProfileData(authData);
-                $window.location.href = '/login';
             }
         })
     }
@@ -181,26 +179,7 @@ app.config(function($stateProvider, $urlRouterProvider){
 
 
 }])
-.controller('profileCtrl', ['$scope', '$cookies', 'Profile', function($scope, $cookies, Profile) {
-    var authData = $cookies.getObject('firebaseAuth');
-    var profile = Profile(authData.uid)
-    $scope.user = profile
-    profile.$loaded().then(function(response) {
-          console.log($scope.user.email);
-    });
-  
-    
-    $scope.saveProfile = function() {
-      $scope.user.$save().then(function() {
-        alert('Profile saved!');
-      }).catch(function(error) {
-        alert('Error!');
-      });
-    };
-    
-}])
-.controller("newEventCtrl", ['eventData', '$scope', '$firebaseObject', function(eventData, $scope, $firebaseObject) {
-
+.controller("newEventCtrl", ['$scope', 'eventData', '$firebaseObject', function($scope, eventData, $firebaseObject) {
 
     var ref = new Firebase('https://localsound.firebaseio.com/Events');
     
@@ -224,7 +203,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     }
     
     ref.on("value", function(snapshot) {
-        $scope.eventArray = (snapshot.getValue());
+        $scope.eventArray = (snapshot.val());
         console.log($scope.eventArray);
 //        for (Object in eventArray) {
 //            $('#eventList').append("<div id='title'>" + Object.title + "</div>");
@@ -276,36 +255,21 @@ app.config(function($stateProvider, $urlRouterProvider){
             });
         }
     }})
-.factory("Profile", ["$firebaseObject",function($firebaseObject) {
-    return function(id) {
-      // create a reference to the database node where we will store our data
-      var ref = new Firebase("https://localsound.firebaseio.com/Profiles");
-      var profileRef = ref.child(id);
-
-      // return it as a synchronized object
-      return $firebaseObject(profileRef);
-    }
-  }
-])
+.factory('profileData', ['$firebaseArray', function($firebaseArray){
+    var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Profiles");
+    var ref = myFirebaseRef.push();
+    
+    return $firebaseArray(ref);
+}])
 .factory('featuredPosts', ['$firebaseArray', function($firebaseArray) {
     var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Posts");
     var ref = myFirebaseRef.push();
     
     return $firebaseArray(ref);
 }])
-.factory('eventData', ['$firebaseArray', '$scope', function($firebaseArray, $scope){
+.factory('eventData', ['$firebaseArray', function($firebaseArray){
     var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Events");
     var ref = myFirebaseRef.push();
-    
-    ref.on("value", function(snapshot) {
-    $scope.eventArray = (snapshot.getValue());
-    console.log($scope.eventArray);
-//        for (Object in eventArray) {
-//            $('#eventList').append("<div id='title'>" + Object.title + "</div>");
-//        }
-    }, function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
-    });
     
     return $firebaseArray(ref);
 }])
