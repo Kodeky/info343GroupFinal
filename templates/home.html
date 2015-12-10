@@ -1,9 +1,17 @@
-<section id="home" class="row">
+<section id="home" class="row row-centered">
+    
 
-    <div class="container">
+    
+    <div class="container" id ="scContainer">
         <div class="info" ng-bind-html="trustPlayer"></div><!-- soundcloud player-->
     </div>   
-    <div id="leftContent" class="col-md-3 col-sm-3 collapse in">
+
+        <div class="welcomeText">
+            Welcome To LocalSound
+            <br /><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-right" aria-hidden="true">
+        </div>
+
+    <div id="leftContent" class="col-md-3 col-sm-3 col-centered collapse in">
         <h1 id="header">Featured Events </h1>
         
         <div id="filler">
@@ -49,7 +57,7 @@
             </div>
     </div>
      
-        <div id="centerContent" class="col-md-5 col-sm-5" class="container">
+        <div id="centerContent" class="col-md-5 col-sm-5 col-centered" class="container">
               <div class="tab-content">
                 <div class="tab-pane active" id="featured">
                   <h1>Featured Songs</h1>
@@ -111,7 +119,7 @@
                 </div>
             </div>
             
-            <div id="rightContent" class="col-md-4 col-sm-4 collapse in">
+            <div id="rightContent" class="col-md-4 col-sm-4 col-centered collapse in">
                 <h1 id="header">Activity</h1>
                     <table class="table">
                             <tr>
