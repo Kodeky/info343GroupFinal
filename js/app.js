@@ -30,7 +30,7 @@ app.config(function($stateProvider, $urlRouterProvider){
             url: '/login',
         templateUrl: "templates/login.html"
         })
-}).controller("localSoundCtrl", ['$scope', '$http', '$sce', '$window', '$cookies', 'Profile', 'Posts', function ($scope, $http, $sce, $window, $cookies, Profile, Posts) {
+}).controller("localSoundCtrl", ['$scope', '$http', '$sce', '$window', '$cookies', 'Profile', '$firebaseArray', function ($scope, $http, $sce, $window, $cookies, Profile, $firebaseArray) {
     
     var authRef = new Firebase('https://localsound.firebaseio.com/web/uauth');
     var ref = new Firebase('https://localsound.firebaseio.com');
@@ -41,9 +41,21 @@ app.config(function($stateProvider, $urlRouterProvider){
     $scope.seletedIndex = -1; // resets/initilizes the username selected
     $scope.isLoggedIn = $cookies.getObject('firebaseAuth') != null ? true : false; //resets/intitilzes logged in trigger
     
+    
+    /*$scope.posts = {
+        rating: 0,
+        avatar: "http://www.google.com",
+        username: "mnmckenn",
+        soundcloud_url: "https://soundcloud.com/tiesto/clublife-by-tiesto-podcast-452-first-hour"
+    }
+    */
+    
     //To test local data; will be replaced by firebase
-    $scope.posts = Posts;
-
+    var firePosts = $firebaseArray(ref.child("Posts"));
+    $scope.posts = firePosts;
+    
+    //console.log($scope.posts);
+    
     //Initializes Show and hide for posts
     for (var i=0; i<$scope.posts.length; i++) {
         $scope.isVisible[i] = 'true'    ;    
@@ -54,7 +66,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     $scope.addPost = function() {
         $scope.inputLink = document.getElementById("scLink").value;
         var authData = $cookies.getObject('firebaseAuth');
-        ref.child("Posts").push({
+        ref.child("Posts").$add({
             uid: authData.uid,
             rating: 0,
             soundcloud_url: $scope.inputLink,
@@ -92,7 +104,7 @@ app.config(function($stateProvider, $urlRouterProvider){
                 $cookies.putObject('firebaseAuth', authData);
                 $scope.isLoggedIn = true;
                 $scope.$apply();
-                $window.location.href = '/';
+                $window.location.href = '#/';
             }
         });  
     }
@@ -100,7 +112,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     $scope.logout = function() {
         authRef.unauth();
         $cookies.remove('firebaseAuth');
-        $window.location.href = '/';
+        $window.location.href = '#/';
     }
     
     //Loads featured info
@@ -127,7 +139,7 @@ app.config(function($stateProvider, $urlRouterProvider){
 
 
 }])
-.controller("signupCtrl", ['$scope', 'profileData', function($scope, profileData) {
+.controller("signupCtrl", ['$scope', '$window', function($scope, $window) {
 
     var ref = new Firebase('https://localsound.firebaseio.com/Profiles');
     
@@ -160,7 +172,7 @@ app.config(function($stateProvider, $urlRouterProvider){
             } else {
                 console.log("Success");
                 $scope.createProfileData(authData);
-                $window.location.href = '/login';
+                $window.location.href = '#/login';
             }
         })
     }
@@ -283,17 +295,28 @@ app.config(function($stateProvider, $urlRouterProvider){
     }
   }
 ])
-.factory('Posts', ['$firebaseArray', function($firebaseArray) {
-    var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Posts");
-    var ref = myFirebaseRef.push();
-    
-    return $firebaseArray(ref);
-}])
 .factory('eventData', ['$firebaseArray', function($firebaseArray){
         var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Events");
         var eventRef = myFirebaseRef.push();
 
         return $firebaseArray(eventRef);
+}])
+.factory('eventData', ['$firebaseArray', '$scope', function($firebaseArray, $scope){
+    var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Events");
+    var ref = myFirebaseRef.push();
+    
+    ref.on("value", function(snapshot) {
+    $scope.eventArray = (snapshot.getValue());
+    console.log($scope.eventArray);
+//        for (Object in eventArray) {
+//            $('#eventList').append("<div id='title'>" + Object.title + "</div>");
+//        }
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+    });
+    
+    return $firebaseArray(ref);
+
 }])
 .filter('fDate', [
     '$filter', function($filter) {
