@@ -1,22 +1,52 @@
-<div class="container profile">
-     <h1>{{user.username}} Username holder</h1>
-    <div class="container col-md-3">
+<div class="container profile" ng-controller="profileCtrl">
+    <div class="container col-md-4">
+        <h1>{{user.username}}</h1>
         <div class="img-wrapper">
-            <img src="http://www.corporalmente.com.br/wp-content/uploads/2013/10/profile_avatar_default.png">
-            <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>
+            <img src="{{user.avatarUrl}}">
+            <!--<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>-->
         </div>
         <div class="user_info">
-            <p> <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>{{user.name}} Name holder</p>
-            <p><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>{{user.soundcloud_profile}} SoundCloud profile holder </p>
-            <p>{{user.numPosts}} numPost holder</p>
+            <p>Email: {{user.email}}</p>
+            <p>SoundCloud: <a href="{{user.soundcloudUrl}}">{{user.username}}</a></p>
+            <p>User Type: {{user.userType}}</p>
+            <p>ZipCode: {{user.zipCode}}</p>
+            
+            
+            <!--
+            <p> <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>{{user.email}} </p>
+            <p><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>{{user.soundcloudUrl}}</p>
+            <p><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>{{user.userType}}</p>
+            <p><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>{{user.zipcode}}</p>-->
         </div>
-    </div>
     <div class="container profile_posts">
-        <h3>Recent Activity: </h3>
-        <p>{{user.posts}} Posts holder</p>
-        <p>{{user.posts}} Posts holder</p>
-        <p>{{user.posts}} Posts holder</p>
-        <p>{{user.posts}} Posts holder</p>
-    </div>   
+       <h2>Recent Activity</h2>
+        <table class="table">
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Rating</th>
+                                <th>Username</th>
+                                <th>Date Posted</th>
+                                <th>SoundCloud Player</th>
+                              </tr>
+                
+                            <tr ng-repeat="post in posts | orderBy:post_date | limitTo:10" ng-onclick="loadInfo($index)">
+                            <td><img ng-src="{{user.avatar_url}}"></td>
+                            <td>
+                                <button class="btn btn-default" type="submit" id="upvote{{$index}}" ng-click="upvote($index)"><i class="glyphicon glyphicon-arrow-up"></i></button>
+                                {{post.rating}}
+                                <button class="btn btn-default" type="submit" id="downvote{{$index}}" ng-click="downvote($index)"><i class="glyphicon glyphicon-arrow-down"></i></button>
+                            </td>
+                            <td>{{user.username}}</td>
+                            <td>{{post.post_date | fDate:"MM/dd/yyyy 'at' h:mma"}}</td>
+                            <td>
+                              <div class="infoWrapper"><!-- Shows button corresponding to the Soundcloud player frame-->
+                                <button class="btn btn-default" type="submit" id="show{{$index}}" ng-click="loadInfo($index)" ng-show="isVisible[{{$index}}]">Show</button>
+                                <button class="btn btn-default" type="submit" id="hide{{$index}}" ng-click="loadInfo($index)" ng-show="isHidden[{{$index}}]">Hide</button>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+        </div>  
+    </div>
 </div>
 
