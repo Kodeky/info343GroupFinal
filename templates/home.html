@@ -1,6 +1,22 @@
 <section id="home" class="row">
     <div id="leftContent" class="col-md-3 col-sm-3 collapse in">
         <h1 id="header">Featured Events </h1>
+        
+        <div id="filler">
+            <h3>Benefit Concert</h3>
+            <p>12/20 9:00pm</p>
+            <p>Come to Neumo's in capitol hill for a free benefit concert! Donations will be accepted at the door.</p>
+            <a href="http://www.neumos.com">Neumo's</a>
+            
+            <h3>ASUW Show</h3>
+            <p>1/18 3:30pm</p>
+            <p>Check out the concert on Rainier Vista coming up featuring Unknown Mortal Orchestra, STRFKR and more.</p>
+            <a href="http://www.asuw.org">ASUW</a>
+            
+            <h3>House Party</h3>
+            <p>12/31 9:30pm</p>
+            <p>We're having an open house on new year's featuring a few DJ's that go to UW. $5 to get in! </p>
+        </div>
             <div id="events" ng-repeat="event in events | limitTo:10">
                 <h3>{{eventObject.title}}</h3>
                 
