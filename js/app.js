@@ -5,7 +5,7 @@ var SOUNDCLOUD_CLIENT_ID = '3a0c15409a6b0e2610d61620155a549c';
 
 var FACEBOOK_APP_ID = '1676203739293367';
 
-var app = angular.module("localSoundApp", ['ngSanitize', 'firebase', "ui.router"]);
+var app = angular.module("localSoundApp", ['ngSanitize', 'firebase', "ui.router", 'ngCookies']);
 
 app.config(function($stateProvider, $urlRouterProvider){
     $urlRouterProvider.otherwise('/');
@@ -30,7 +30,7 @@ app.config(function($stateProvider, $urlRouterProvider){
             url: '/login',
         templateUrl: "templates/login.html"
         })
-}).controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
+}).controller("localSoundCtrl", ['$scope', '$http', '$sce', '$window', '$cookies', function ($scope, $http, $sce, $window, $cookies) {
     
     var authRef = new Firebase('https://localsound.firebaseio.com/web/uauth')
     
@@ -38,7 +38,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     $scope.isVisible = []; // resets/initilizes the array for show buttons
     $scope.isHidden = []; // resets/initilizes the array for hide buttons
     $scope.seletedIndex = -1; // resets/initilizes the username selected
-    $scope.isLoggedIn = false; //resets/intitilzes logged in trigger
+    $scope.isLoggedIn = $cookies.get('firebaseAuth') != null ? true : false; //resets/intitilzes logged in trigger
     
     //To test local data; will be replaced by firebase
     $scope.posts = [
@@ -105,16 +105,18 @@ app.config(function($stateProvider, $urlRouterProvider){
                 console.log("Login Failed!", error);
                 deffered.reject(error);
             } else {
-                console.log(authData);
+                $cookies.put('firebaseAuth', authData);
                 $scope.isLoggedIn = true;
                 $scope.$apply();
+                $window.location.href = '/';
             }
         });  
     }
     
     $scope.logout = function() {
         authRef.unauth();
-        $scope.isLoggedIn = false;
+        $cookies.remove('firebaseAuth');
+        $scope.$apply();
     }
     
     //Loads featured info
@@ -172,6 +174,7 @@ app.config(function($stateProvider, $urlRouterProvider){
             } else {
                 console.log("Success");
                 $scope.createProfileData(authData);
+                $window.location.href = '/login';
             }
         })
     }
