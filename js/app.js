@@ -30,7 +30,7 @@ app.config(function($stateProvider, $urlRouterProvider){
             url: '/login',
         templateUrl: "templates/login.html"
         })
-}).controller("localSoundCtrl", ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
+}).controller("localSoundCtrl", ['$scope', '$http', '$sce', '$window', '$cookies', 'Profile', function ($scope, $http, $sce, $window, $cookies, Profile) {
     
     var authRef = new Firebase('https://localsound.firebaseio.com/web/uauth')
     
@@ -43,6 +43,15 @@ app.config(function($stateProvider, $urlRouterProvider){
     //To test local data; will be replaced by firebase
     $scope.posts = [
         {
+            avatar: 'https://i1.sndcdn.com/avatars-000191323296-4g1un5-t500x500.jpg',
+            username: "Tiesto",
+            full_name: "Tiesto",
+            rating: 0,
+            post_date: Date(),
+            soundcloud_url: "https://soundcloud.com/tiesto"
+        },
+        {
+            avatar: "https://i1.sndcdn.com/avatars-000192555351-8giqiz-t500x500.jpg",
             username: "AboveandBeyond",
             full_name: "Above & Beyond",
             track_count: 0,
@@ -58,7 +67,9 @@ app.config(function($stateProvider, $urlRouterProvider){
             post_date: Date(),
             soundcloud_url: "https://soundcloud.com/tiesto"
         }
+
     ];
+    
     
     //Initializes Show and hide for posts
     for (var i=0; i<$scope.posts.length; i++) {
@@ -70,11 +81,12 @@ app.config(function($stateProvider, $urlRouterProvider){
     $scope.addPost = function () {
         $scope.inputLink = document.getElementById("scLink").value;
         console.log($scope.inputLink);
-
+        var authData = $cookies.getObject('firebaseAuth');
+        var profile = Profile(authData.uid)
+        $scope.user = profile
+    
         $scope.post = {
-            username: "AboveandBeyond",
-            full_name: "Above & Beyond",
-            track_count: 0,
+            username: user.username,
             rating: 0,
             post_date: Date(),
             soundcloud_url: $scope.inputLink
@@ -82,6 +94,7 @@ app.config(function($stateProvider, $urlRouterProvider){
         }
         
         $scope.posts.push($scope.post);
+        $scope.$apply();
         console.log($scope.posts);
     }
       

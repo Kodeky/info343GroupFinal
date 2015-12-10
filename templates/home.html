@@ -1,6 +1,24 @@
 <section id="home" class="row">
+                        <div  class="info" ng-bind-html="trustPlayer">
+                    </div>   
     <div id="leftContent" class="col-md-3 col-sm-3 collapse in">
         <h1 id="header">Featured Events </h1>
+        
+        <div id="filler">
+            <h3>Benefit Concert</h3>
+            <p>12/20 9:00pm</p>
+            <p>Come to Neumo's in capitol hill for a free benefit concert! Donations will be accepted at the door.</p>
+            <a href="http://www.neumos.com">Neumo's</a>
+            
+            <h3>ASUW Show</h3>
+            <p>1/18 3:30pm</p>
+            <p>Check out the concert on Rainier Vista coming up featuring Unknown Mortal Orchestra, STRFKR and more.</p>
+            <a href="http://www.asuw.org">ASUW</a>
+            
+            <h3>House Party</h3>
+            <p>12/31 9:30pm</p>
+            <p>We're having an open house on new year's featuring a few DJ's that go to UW. $5 to get in! </p>
+        </div>
             <div id="events" ng-repeat="event in events | limitTo:10">
                 <h3>{{eventObject.title}}</h3>
                 
@@ -28,41 +46,37 @@
             
             </div>
     </div>
-        
-        <div id="centerContent" class="col-md-6 col-sm-6" class="container">
+     
+        <div id="centerContent" class="col-md-5 col-sm-5" class="container">
               <div class="tab-content">
                 <div class="tab-pane active" id="featured">
-                  <h3>Featured Songs</h3>
-                  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                  <h1>Featured Songs</h1>
+                  <!--<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                     <form class="navbar-form" role="search">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search" name="q">
                     <div class="input-group-btn">
                         <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     </div>
-                </div>
+                </div>-->
             </form>
                     <table class="table">
                         <tr>
                             <th>Avatar</th>
-                            <th><a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse">Rating</a></th>
+                            <th><a href="" ng-click="sortType = 'rating'; sortReverse = !sortReverse">Rating</a></th>
                             <th><a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse">Username</a></th>
-                            <th><a href="" ng-click="sortType = 'full_name'; sortReverse = !sortReverse">Full Name</a></th>
-                            <th><a href="" ng-click="sortType = 'track_count'; sortReverse = !sortReverse">Track Count</a></th>
                             <th><a href="" ng-click="sortType = 'post_date'; sortReverse = !sortReverse">Date Posted</a></th>
                             <th>SoundCloud Player</th>
                           </tr>
 
                         <tr ng-repeat="post in posts | orderBy:sortType:sortReverse | filter:searchQuery" ng-onclick="loadInfo($index)">
-                        <td><img ng-src="{{user.avatar_url}}"></td>
+                        <td><img ng-src="{{post.avatar}}" height="50px" width="50px"></td>
                         <td>
                             <button class="btn btn-default" type="submit" id="upvote{{$index}}" ng-click="upvote($index)"><i class="glyphicon glyphicon-arrow-up"></i></button>
                             {{post.rating}}
                             <button class="btn btn-default" type="submit" id="downvote{{$index}}" ng-click="downvote($index)"><i class="glyphicon glyphicon-arrow-down"></i></button>
                         </td>
                         <td>{{post.username}}</td>
-                        <td>{{post.full_name}}</td>
-                        <td>{{post.track_count}}</td>
                         <td>{{post.post_date | fDate:"MM/dd/yyyy 'at' h:mma"}}</td>
                         <td>
                           <div class="infoWrapper"><!-- Shows button corresponding to the Soundcloud player frame-->
@@ -72,8 +86,7 @@
                         </td>
                       </tr>
                     </table>
-                    <div  class="info" ng-bind-html="trustPlayer">
-                    </div>
+
                 </div>
 
 <!--
@@ -96,7 +109,7 @@
                 </div>
             </div>
             
-            <div id="rightContent" class="col-md-3 col-sm-3 collapse in">
+            <div id="rightContent" class="col-md-4 col-sm-4 collapse in">
                 <h1 id="header">Activity</h1>
                     <table class="table">
                             <tr>
@@ -108,7 +121,7 @@
                               </tr>
                 
                             <tr ng-repeat="post in posts | orderBy:post_date | limitTo:10" ng-onclick="loadInfo($index)">
-                            <td><img ng-src="{{user.avatar_url}}"></td>
+                            <td><img ng-src="{{post.avatar}}" height="50px" width="50px"></td>
                             <td>
                                 <button class="btn btn-default" type="submit" id="upvote{{$index}}" ng-click="upvote($index)"><i class="glyphicon glyphicon-arrow-up"></i></button>
                                 {{post.rating}}
