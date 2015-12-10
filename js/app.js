@@ -67,16 +67,17 @@ app.config(function($stateProvider, $urlRouterProvider){
     
     //Local method to add posts
     //TODO: change to add to firebase
-    $scope.inputLink;
-    $scope.addPost = function (inputLink) {
+    $scope.addPost = function () {
+        $scope.inputLink = document.getElementById("scLink").value;
         console.log($scope.inputLink);
+
         $scope.post = {
             username: "AboveandBeyond",
             full_name: "Above & Beyond",
             track_count: 0,
             rating: 0,
             post_date: Date(),
-            soundcloud_url: "https://soundcloud.com/aboveandbeyond"
+            soundcloud_url: $scope.inputLink
             //location : $scope.getLocation()
         }
         
