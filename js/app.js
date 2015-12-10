@@ -41,28 +41,30 @@ app.config(function($stateProvider, $urlRouterProvider){
     $scope.seletedIndex = -1; // resets/initilizes the username selected
     $scope.isLoggedIn = $cookies.getObject('firebaseAuth') != null ? true : false; //resets/intitilzes logged in trigger
     
-    
-    /*$scope.posts = {
-        rating: 0,
-        avatar: "http://www.google.com",
-        username: "mnmckenn",
-        soundcloud_url: "https://soundcloud.com/tiesto/clublife-by-tiesto-podcast-452-first-hour"
-    }
-    */
-    
-    //To test local data; will be replaced by firebase
+        
+    $scope.posts = [];
     var firePosts = $firebaseArray(ref.child("Posts"));
-    $scope.posts = firePosts;
+    firePosts.$loaded().then(function(x) {
+        angular.forEach(firePosts, function(data, index) {
+            var profile = Profile(data.uid)
+            profile.$loaded().then(function(response) {
+                data.username = profile.username;
+                data.avatar = profile.avatarUrl;
+            });
+            $scope.posts.push(data);
+        });
+        //Initializes Show and hide for posts
+        for (var i=0; i<$scope.posts.length; i++) {
+            $scope.isVisible[i] = 'true'    ; 
+        }
+    })
+    .catch(function(error) {
+        console.log("Error:", error);
+    });
+
+
     
-    //console.log($scope.posts);
-    
-    //Initializes Show and hide for posts
-    for (var i=0; i<$scope.posts.length; i++) {
-        $scope.isVisible[i] = 'true'    ;    
-    }
-    
-    //Local method to add posts
-    //TODO: change to add to firebase
+    //Adds post to firebase
     $scope.addPost = function() {
         $scope.inputLink = document.getElementById("scLink").value;
         var authData = $cookies.getObject('firebaseAuth');
@@ -82,13 +84,17 @@ app.config(function($stateProvider, $urlRouterProvider){
     }
       
     //TODO: Add upvote functionality to featured posts
-    $scope.upVote = function(index) {
-        $scope.posts[index].rating += 1;
+    $scope.upVote = function(postId) {
+        var post = firePosts.$getRecord(postId);
+        post.rating += 1;
+        firePosts.$save(post).then(function(){});
     }
     
     //TODO: Add downvote functionality to featured posts
-    $scope.downVote = function(index) {
-         $scope.posts[index].rating -= 1;
+    $scope.downVote = function(postId) {
+         var post = firePosts.$getRecord(postId);
+        post.rating -= 1;
+        firePosts.$save(post).then(function(){});
     }
     
     $scope.login = function(email, password) {     
