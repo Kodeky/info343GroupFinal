@@ -65,6 +65,26 @@ app.config(function($stateProvider, $urlRouterProvider){
     .catch(function(error) {
         console.log("Error:", error);
     });
+    
+    // Adds events to main page
+    console.log($scope.events);
+    // array for holding all event objects
+    if ($scope.events === undefined) {
+        $scope.events = [];
+    }
+    console.log($scope.events);
+    
+    var eventRef = new Firebase('https://localsound.firebaseio.com/Events');
+    
+    // make sure main page is loaded, then show events
+    eventRef.once("value", function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+            $scope.events.push(childSnapshot.val());
+            console.log($scope.events);
+        })
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+    });
 
 
     
@@ -235,22 +255,6 @@ app.config(function($stateProvider, $urlRouterProvider){
             }
         })
     }
-    
-    console.log($scope.events);
-    // array for holding all event objects
-    if ($scope.events === undefined) {
-        $scope.events = [];
-    }
-    console.log($scope.events);
-    
-    // make sure main page is loaded, then show events
-    ref.once("value", function(snapshot) {
-        snapshot.forEach(function(childSnapshot) {
-            $scope.events.push(childSnapshot.val());
-        })
-    }, function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
-    });
     
 }])
 .directive('modal', function () {
