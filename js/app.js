@@ -8,7 +8,7 @@ var FACEBOOK_APP_ID = '1676203739293367';
 var app = angular.module("localSoundApp", ['ngSanitize', 'firebase', "ui.router", 'ngCookies']);
 
 app.config(function($stateProvider, $urlRouterProvider){
-    $urlRouterProvider.otherwise('index.html#/');
+    $urlRouterProvider.otherwise('/');
 	$stateProvider
 	    .state('index', {
 	        url: '/',
