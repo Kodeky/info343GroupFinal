@@ -180,16 +180,37 @@ app.config(function($stateProvider, $urlRouterProvider){
 
 
 }])
+.controller('profileCtrl', ['$scope', '$cookies', 'Profile', function($scope, $cookies, Profile) {
+    var authData = $cookies.getObject('firebaseAuth');
+    var profile = Profile(authData.uid)
+    $scope.user = profile
+    profile.$loaded().then(function(response) {
+          console.log($scope.user.email);
+    });
+  
+    
+    $scope.saveProfile = function() {
+      $scope.user.$save().then(function() {
+        alert('Profile saved!');
+      }).catch(function(error) {
+        alert('Error!');
+      });
+    };
+    
+}])
 .controller("newEventCtrl", ['$scope', '$firebaseObject', '$firebaseArray', function($scope, $firebaseObject, $firebaseArray) {
 
     var ref = new Firebase('https://localsound.firebaseio.com/Events');
+    var fireEvents = $firebaseArray(ref);
+    console.log(fireEvents);
+    
     
     // object for storing new events created on /events page
     $scope.eventObject = {}; 
     
     // creates new event
     $scope.createEvent = function() {
-        ref.push({
+        ref.$add({
             city: $scope.eventObject.city,
             title: $scope.eventObject.title,
             body: $scope.eventObject.body,
@@ -220,7 +241,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
-    
+
 }])
 .directive('modal', function () {
     return {

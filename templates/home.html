@@ -13,7 +13,6 @@
 
     <div id="leftContent" ng-controller="newEventCtrl" class="col-md-3 col-sm-3 col-centered collapse in">
         <h1 id="header">Featured Events </h1>
-        
             <div id="events" ng-repeat="event in events | limitTo:10">
                 <h3>{{event.title}}</h3>
                 <p>{{event.city}}</p>
