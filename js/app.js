@@ -57,8 +57,8 @@ app.config(function($stateProvider, $urlRouterProvider){
         });
         //Initializes Show and hide for posts
         for (var i=0; i<$scope.posts.length; i++) {
-            $scope.isVisible[i] = 'true'; 
-            $scope.hasVoted[i] = 'false';
+            $scope.isVisible[i] = true; 
+            $scope.hasVoted[i] = false;
             console.log($scope.hasVoted);
         }
     })
@@ -88,19 +88,20 @@ app.config(function($stateProvider, $urlRouterProvider){
     }
       
     //TODO: Add upvote functionality to featured posts
-    $scope.upVote = function(postId) {
+    $scope.upVote = function(postId, index) {
         var post = firePosts.$getRecord(postId);
+        console.log(postId);
         post.rating += 1;
-        firePosts.$save(post).then(function(){});
-        $scope.hasVoted = true;
+        firePosts.$save(post);
+        $scope.hasVoted[index] = true;
     }
     
     //TODO: Add downvote functionality to featured posts
-    $scope.downVote = function(postId) {
+    $scope.downVote = function(postId, index) {
         var post = firePosts.$getRecord(postId);
         post.rating -= 1;
-        firePosts.$save(post).then(function(){});
-        $scope.hasVoted = true;
+        firePosts.$save(post);
+        $scope.hasVoted[index] = true;
     }
     
     $scope.login = function(email, password) {     
@@ -169,7 +170,6 @@ app.config(function($stateProvider, $urlRouterProvider){
     
     $scope.createProfileData = function(authData) {
         delete $scope.registrationInfo.password;
-        $scope.registrationInfo.numPosts = 0;
         $scope.registrationInfo.posts = {};
         ref.child(authData.uid).set($scope.registrationInfo);
     }
