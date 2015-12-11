@@ -11,14 +11,15 @@
             <br /><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-right" aria-hidden="true">
         </div>
 
-    <div id="leftContent" class="col-md-3 col-sm-3 col-centered collapse in">
+    <div id="leftContent" ng-controller="newEventCtrl" class="col-md-3 col-sm-3 col-centered collapse in">
         <h1 id="header">Featured Events </h1>
         
-            <div id="events" ng-controller="newEventCtrl" ng-repeat="event in $scope.eventArray | limitTo:10">
+            <div id="events" ng-repeat="event in events | limitTo:10">
                 <h3>{{event.title}}</h3>
-                
-                
-            
+                <p>{{event.city}}</p>
+                <p>{{event.dateTime | fDate:"MM/dd/yyyy 'at' h:mma"}}</p>
+                <p>{{event.body}}</p>
+                <a sref="{{event.link}}"></a>
             </div>
     </div>
      

@@ -211,13 +211,14 @@ app.config(function($stateProvider, $urlRouterProvider){
     };
     
 }])
-.controller("newEventCtrl", ['eventData', '$scope', '$firebaseObject', function(eventData, $scope, $firebaseObject) {
-
+.controller("newEventCtrl", ['$scope', '$firebaseObject', '$firebaseArray', function($scope, $firebaseObject, $firebaseArray) {
 
     var ref = new Firebase('https://localsound.firebaseio.com/Events');
     
-    $scope.eventObject = {};   
+    // object for storing new events created on /events page
+    $scope.eventObject = {}; 
     
+    // creates new event
     $scope.createEvent = function() {
         ref.push({
             city: $scope.eventObject.city,
@@ -235,27 +236,22 @@ app.config(function($stateProvider, $urlRouterProvider){
         })
     }
     
-//    $scope.events1 = eventData;
-//    eventData.$loaded().then(function() {
-//        angular.forEach($scope.events1, function(event, index) {
-//            
-//        }
-//    }
+    console.log($scope.events);
+    // array for holding all event objects
+    if ($scope.events === undefined) {
+        $scope.events = [];
+    }
+    console.log($scope.events);
     
-    
-    
-    ref.on("value", function(snapshot) {
-        $scope.eventArray = (snapshot.val());
-        console.log($scope.eventArray);
-//        for (Object in eventArray) {
-//            $('#eventList').append("<div id='title'>" + Object.title + "</div>");
-//        }
+    // make sure main page is loaded, then show events
+    ref.once("value", function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+            $scope.events.push(childSnapshot.val());
+        })
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
     
-    /* create a $firebaseArray for the event reference and add to scope */
-	$scope.events = $firebaseObject(ref);
 }])
 .directive('modal', function () {
     return {
@@ -308,29 +304,6 @@ app.config(function($stateProvider, $urlRouterProvider){
     }
   }
 ])
-.factory('eventData', ['$firebaseArray', function($firebaseArray){
-        var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Events");
-        var eventRef = myFirebaseRef.push();
-
-        return $firebaseArray(eventRef);
-}])
-.factory('eventData', ['$firebaseArray', '$scope', function($firebaseArray, $scope){
-    var myFirebaseRef = new Firebase("https://localsound.firebaseio.com/Events");
-    var ref = myFirebaseRef.push();
-    
-    ref.on("value", function(snapshot) {
-    $scope.eventArray = (snapshot.getValue());
-    console.log($scope.eventArray);
-//        for (Object in eventArray) {
-//            $('#eventList').append("<div id='title'>" + Object.title + "</div>");
-//        }
-    }, function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
-    });
-    
-    return $firebaseArray(ref);
-
-}])
 .filter('fDate', [
     '$filter', function($filter) {
         return function(input, format) {
