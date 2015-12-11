@@ -184,8 +184,10 @@ app.config(function($stateProvider, $urlRouterProvider){
 
     var ref = new Firebase('https://localsound.firebaseio.com/Events');
     
-//    $scope.eventObject = {};   
+    // object for storing new events created on /events page
+    $scope.eventObject = {}; 
     
+    // creates new event
     $scope.createEvent = function() {
         ref.push({
             city: $scope.eventObject.city,
@@ -203,23 +205,21 @@ app.config(function($stateProvider, $urlRouterProvider){
         })
     }
     
-    $scope.events = [];
+    console.log($scope.events);
+    // array for holding all event objects
+    if ($scope.events === undefined) {
+        $scope.events = [];
+    }
+    console.log($scope.events);
     
+    // make sure main page is loaded, then show events
     ref.once("value", function(snapshot) {
-        $scope.eventArray = (snapshot.val());
         snapshot.forEach(function(childSnapshot) {
             $scope.events.push(childSnapshot.val());
         })
-        console.log($scope.eventArray);
-        console.log($scope.events);
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
-    
-    /* create a $firebaseArray for the event reference and add to scope */
-//	$scope.events.push($firebaseArray(ref));
-//    console.log($scope.events);
-    
     
 }])
 .directive('modal', function () {
