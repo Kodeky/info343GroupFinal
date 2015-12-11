@@ -24,8 +24,6 @@ body {
 	
 	font-family: "Lobster", sans-serif;
         font-size: 72px;
-
-
 }
 
 
@@ -33,14 +31,9 @@ body {
     padding-right: 0px;
     padding-left: 0px;
 }
-.navbar {
-background-color: black;
-}
 
-
-
-.nav {
-	color:black;
+.navbar, .nav {
+	background-color: black;
 }
     nav li {
         display: inline-block;
@@ -76,7 +69,12 @@ background-color: black;
 		padding-bottom: .5em;
 		margin-bottom: 1em;
     }
-
+    #hamburger {	
+	background-color:white;
+    }
+    .icon-bar {
+	background-color:black;
+    }
 
 
 
@@ -106,7 +104,7 @@ background-color: black;
     border-radius: 25px;
     padding-top: 10px;
     height: 100%;
-
+    margin-bottom: 100px;
 
 }
 
@@ -115,6 +113,7 @@ background-color: black;
     border-radius: 25px; 
     padding-top: 10px;
     height: 100%;
+    margin-bottom: 100px;
 }
 
 #tabs {
@@ -126,6 +125,7 @@ background-color: black;
     border-radius: 25px; 
     padding-top: 10px;
     height: 100%;
+    margin-bottom: 100px;
 }
 
 footer {
