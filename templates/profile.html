@@ -21,7 +21,7 @@
             </p>
             <p>
                 <button ng-model="button" class="btn btn-xs btn-default" ng-disabled="true">Edit <span class="glyphicon glyphicon-wrench"></span></button>
-                ZipCode: {{user.zipCode}}
+                Zip-Code: {{user.zipcode}}
 
             </p>
 
@@ -36,28 +36,18 @@
         <h2>Your Posts</h2>
         <table class="table">
             <tr>
-                <th>Avatar</th>
                 <th>Rating</th>
-                <th>Username</th>
                 <th>Date Posted</th>
-                <th>SoundCloud Player</th>
+                <th>SoundCloud</th>
             </tr>
 
-            <tr ng-repeat="post in posts | orderBy:post_date | limitTo:10" ng-onclick="loadInfo($index)">
+            <tr ng-repeat="post in posts | orderBy:post_date | filter: { username: user.username}" ng-onclick="loadInfo($index)">
                 <td>
-                    <img ng-src="{{user.avatar_url}}"></td>
-                <td>
-                    <button class="btn btn-default" type="submit" id="upvote{{$index}}" ng-click="upvote($index)"><i class="glyphicon glyphicon-arrow-up"></i></button>
                     {{post.rating}}
-                                <button class="btn btn-default" type="submit" id="downvote{{$index}}" ng-click="downvote($index)"><i class="glyphicon glyphicon-arrow-down"></i></button>
                 </td>
-                <td>{{user.username}}</td>
-                <td>{{post.post_date | fDate:"MM/dd/yyyy 'at' h:mma"}}</td>
+                <td>{{post.dateTime| fDate:"MM/dd/yyyy 'at' h:mma"}}</td>
                 <td>
-                    <div class="infoWrapper">
-                        <!-- Shows button corresponding to the Soundcloud player frame-->
-                        <button class="btn btn-default" type="submit" id="show{{$index}}" ng-click="loadInfo($index)" ng-show="isVisible[{{$index}}]">Show</button>
-                        <button class="btn btn-default" type="submit" id="hide{{$index}}" ng-click="loadInfo($index)" ng-show="isHidden[{{$index}}]">Hide</button>
+                   <a href="{{post.soundcloudUrl}}">SoundCloud Link</a>
                     </div>
                 </td>
             </tr>

@@ -106,7 +106,7 @@ app.config(function($stateProvider, $urlRouterProvider){
         $window.location.href = '/';
     }
       
-    //TODO: Add upvote functionality to featured posts
+    //Upvote functionality for posts
     $scope.upVote = function(postId, index) {
         var post = firePosts.$getRecord(postId);
         console.log(postId);
@@ -115,7 +115,7 @@ app.config(function($stateProvider, $urlRouterProvider){
         $scope.hasVoted[index] = true;
     }
     
-    //TODO: Add downvote functionality to featured posts
+    //Downvote functionality for featured posts
     $scope.downVote = function(postId, index) {
         var post = firePosts.$getRecord(postId);
         post.rating -= 1;
@@ -123,6 +123,7 @@ app.config(function($stateProvider, $urlRouterProvider){
         $scope.hasVoted[index] = true;
     }
     
+    //Logs user in using Firebase, sets cookie
     $scope.login = function(email, password) {     
         authRef.authWithPassword({
             email: email,
@@ -141,6 +142,7 @@ app.config(function($stateProvider, $urlRouterProvider){
         });  
     }
     
+    //Logs user out from Firebase and clears cookies
     $scope.logout = function() {
         authRef.unauth();
         $cookies.remove('firebaseAuth');

@@ -38,7 +38,7 @@
             <div class="collapse navbar-collapse" id="myNavbar">
               <ul class="navbar-header">
                 <li ng-show="isLoggedIn"><a ui-sref="profile">Profile</a></li>
-                <li><a ui-sref="events">Events</a></li>
+                <li ng-show="isLoggedIn"><a ui-sref="events">Events</a></li>
               </ul>
               
             <ul class="navbar-header navbar-right">
