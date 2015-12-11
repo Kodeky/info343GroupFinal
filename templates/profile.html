@@ -3,34 +3,21 @@
         <h1>{{user.username}}</h1>
         <div class="img-wrapper">
             <img src="{{user.avatarUrl}}">
-            <!--<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>-->
         </div>
         <div class="user_info">
             <p>
-                <button ng-model="button" class="btn btn-xs btn-default" ng-disabled="true">Edit <span class="glyphicon glyphicon-wrench"></span></button>
                 Email: <a href="{{user.soundcloudUrl}}">{{user.email}}</a>
             </p>
             <p>
-                <button ng-model="button" class="btn btn-xs btn-default" ng-disabled="true">Edit <span class="glyphicon glyphicon-wrench"></span></button>
                 SoundCloud: <a href="{{user.soundcloudUrl}}">{{user.username}}</a>
             </p>
             <p>
-                <button ng-model="button" class="btn btn-xs btn-default" ng-disabled="true">Edit <span class="glyphicon glyphicon-wrench"></span></button>
                 User Type: {{user.userType}}
 
             </p>
             <p>
-                <button ng-model="button" class="btn btn-xs btn-default" ng-disabled="true">Edit <span class="glyphicon glyphicon-wrench"></span></button>
                 Zip-Code: {{user.zipcode}}
-
             </p>
-
-
-            <!--
-            <p> <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>{{user.email}} </p>
-            <p><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>{{user.soundcloudUrl}}</p>
-            <p><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>{{user.userType}}</p>
-            <p><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>{{user.zipcode}}</p>-->
         </div>
 
         <h2>Your Posts</h2>

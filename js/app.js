@@ -218,18 +218,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     var profile = Profile(authData.uid)
     $scope.user = profile
     profile.$loaded().then(function(response) {
-          console.log($scope.user.email);
     });
-  
-    
-    $scope.saveProfile = function() {
-      $scope.user.$save().then(function() {
-        alert('Profile saved!');
-      }).catch(function(error) {
-        alert('Error!');
-      });
-    };
-    
 }])
 .controller("newEventCtrl", ['$scope', '$firebaseObject', '$firebaseArray', function($scope, $firebaseObject, $firebaseArray) {
 
