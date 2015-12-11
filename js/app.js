@@ -8,10 +8,10 @@ var FACEBOOK_APP_ID = '1676203739293367';
 var app = angular.module("localSoundApp", ['ngSanitize', 'firebase', "ui.router", 'ngCookies']);
 
 app.config(function($stateProvider, $urlRouterProvider){
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('index.html#/');
 	$stateProvider
 	    .state('index', {
-	        url: '/',
+	        url: 'index.html#/',
 			templateUrl: "templates/home.html"
 	    })
         .state('profile', {
@@ -117,7 +117,7 @@ app.config(function($stateProvider, $urlRouterProvider){
                 $cookies.putObject('firebaseAuth', authData);
                 $scope.isLoggedIn = true;
                 $scope.$apply();
-                $window.location.href = '#/';
+                $window.location.href = 'index.html#/';
             }
         });  
     }
@@ -125,7 +125,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     $scope.logout = function() {
         authRef.unauth();
         $cookies.remove('firebaseAuth');
-        $window.location.href = '/';
+        $window.location.href = 'index.html/';
     }
     
     //Loads featured info
