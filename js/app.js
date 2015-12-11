@@ -126,7 +126,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     $scope.logout = function() {
         authRef.unauth();
         $cookies.remove('firebaseAuth');
-        $window.location.href = 'index.html/';
+        $window.location.href = '/';
     }
     
     //Loads featured info
