@@ -34,7 +34,7 @@ body {
 	padding-left: 0px;
 }
 .navbar {
-background-color: black;
+	background-color: black;
 }
 
 
@@ -70,7 +70,7 @@ background-color: black;
 
 	.navbar-header {
 		margin-top: .7em;
-			padding-right: .5em;
+		padding-right: .5em;
 		padding-left: .5em;
 		padding-bottom: .5em;
 		margin-bottom: 1em;
@@ -129,8 +129,7 @@ background-color: black;
 }
 
 footer {
-	position: fixed;
-	bottom: 0px;
+	position: relative;
 }
 
 #footer {
@@ -140,6 +139,7 @@ footer {
 	margin-left: 0px;
 	float: left;
 	font-size: 12px;
+	margin-top:100px;
 	background-color: #333;
 }
 
