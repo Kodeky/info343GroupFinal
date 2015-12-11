@@ -3,7 +3,7 @@
 
 body {
 	background-image:url("/pics/wallhaven-84873.jpg");
-	background-position: center;
+ 	background-position: center;
 }
 
 #scContainer {
@@ -23,18 +23,18 @@ body {
 	padding-top:65px;
 	
 	font-family: "Lobster", sans-serif;
-		font-size: 72px;
+        font-size: 72px;
 
 
 }
 
 
 #head {
-	padding-right: 0px;
-	padding-left: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
 }
 .navbar {
-	background-color: black;
+background-color: black;
 }
 
 
@@ -42,39 +42,40 @@ body {
 .nav {
 	color:black;
 }
-	nav li {
-		display: inline-block;
-	}
+    nav li {
+        display: inline-block;
+    }
 
-	nav a {
-		font-family: "Lobster", sans-serif;
-		font-size: 32px;
-		height: 16px;
+    nav a {
+        font-family: "Lobster", sans-serif;
+        font-size: 32px;
+        height: 16px;
 		margin-top: .5em;
-			padding-right: .5em;
+        	padding-right: .5em;
 		padding-left: .5em;
 		padding-bottom: .5em;
 		margin-bottom: 1em;
-		color: white;
-		text-decoration: none;
-	}
+        color: white;
+        text-decoration: none;
+	cursor:pointer;
+    }
 
-	nav a:hover {
-		text-decoration: none;
-		color: #d4ac9f;
-	}
-	nav a:focus {
-		text-decoration: none;
-		color: white; 
-	}
+    nav a:hover {
+        text-decoration: none;
+        color: #d4ac9f;
+    }
+    nav a:focus {
+        text-decoration: none;
+        color: white; 
+    }
 
-	.navbar-header {
+    .navbar-header {
 		margin-top: .7em;
-		padding-right: .5em;
+        	padding-right: .5em;
 		padding-left: .5em;
 		padding-bottom: .5em;
 		margin-bottom: 1em;
-	}
+    }
 
 
 
@@ -90,95 +91,95 @@ body {
 }
 
 #cf {
-	padding-right: 0px;
-	padding-left: 0px;
-	font-family: "Dosis", "Helvetica", sans-serif;
+    padding-right: 0px;
+    padding-left: 0px;
+    font-family: "Dosis", "Helvetica", sans-serif;
 }
 
 #mainArea {
-	width: 100%;
+    width: 100%;
 /*    padding-top: 48px;*/
 }
 
 #leftContent {
-	background-color:rgba(240, 240, 240, 0.95);
-	border-radius: 25px;
-	padding-top: 10px;
-	height: 100%;
+    background-color:rgba(240, 240, 240, 0.95);
+    border-radius: 25px;
+    padding-top: 10px;
+    height: 100%;
 
 
 }
 
 #centerContent {
-	background-color: white;
-	border-radius: 25px; 
-	padding-top: 10px;
-	height: 100%;
+    background-color: white;
+    border-radius: 25px; 
+    padding-top: 10px;
+    height: 100%;
 }
 
 #tabs {
-	font-size: 24px;
+    font-size: 24px;
 }
 
 #rightContent {
-	background-color:rgba(255, 255, 255, 0.95);
-	border-radius: 25px; 
-	padding-top: 10px;
+    background-color:rgba(255, 255, 255, 0.95);
+    border-radius: 25px; 
+    padding-top: 10px;
 
-	height: 100%;
+    height: 100%;
 }
 
 footer {
-	position: relative;
+    position: fixed;
+    bottom: 0px;
 }
 
 #footer {
-	color: #9d9d9d;
-	padding-bottom: 0px;
-	width: 100%;
-	margin-left: 0px;
-	float: left;
-	font-size: 12px;
-	margin-top:100px;
-	background-color: #333;
+    color: #9d9d9d;
+    padding-bottom: 0px;
+    width: 100%;
+    margin-left: 0px;
+    float: left;
+    font-size: 12px;
+    background-color: #333;
 }
 
 .css-form input.ng-invalid.ng-touched {
-	background-color: #FA787E;
+    background-color: #FA787E;
 }
 
 #footer p {
-	margin: 0 0 0 0;
+    margin: 0 0 0 0;
 }
 
 .form-control {
-	width: 100%;
+    width: 100%;
 }
 
 .img-wrapper {
-	width: 200px;
-	height: 200px;
-	margin-top: 1em;
-	margin-bottom: 1em;
+    width: 200px;
+    height: 200px;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 .img-wrapper img {
-	height: 200px;
-	width: 200px;
+    height: 200px;
+    width: 200px;
 }
 
 .img-wrapper button {
-	position: relative;
-	bottom: 32px;
+    position: relative;
+    bottom: 32px;
 }
 
 .profile_posts {
-	background-color: aliceblue;
-	margin-bottom: 1em;
+    background-color: aliceblue;
+    margin-bottom: 1em;
 }
 
 .eventContainer {
-	padding-bottom: 3em;
-	padding-left: 2em;
-	padding-right: 2em;
+    padding-bottom: 3em;
+    padding-left: 2em;
+    padding-right: 2em;
 }
