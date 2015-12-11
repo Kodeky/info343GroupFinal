@@ -11,8 +11,9 @@
             <br /><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-right" aria-hidden="true">
         </div>
 
+<!--    Event area of home page   -->
     <div id="leftContent" ng-controller="newEventCtrl" class="col-md-3 col-sm-3 col-centered collapse in">
-        <h1 id="header">Featured Events </h1>
+        <h1 id="header">Featured Events</h1>
         
             <div id="events" ng-repeat="event in events | limitTo:10">
                 <h3>{{event.title}}</h3>
@@ -27,15 +28,6 @@
               <div class="tab-content">
                 <div class="tab-pane active" id="featured">
                   <h1>Featured Songs</h1>
-                  <!--<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                    <form class="navbar-form" role="search">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" name="q">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                    </div>
-                </div>-->
-            </form>
                     <table class="table">
                         <tr>
                             <th>Avatar</th>

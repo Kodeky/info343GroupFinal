@@ -41,9 +41,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     $scope.hasVoted = [];// resets/initilizes the array for hide buttons
     $scope.seletedIndex = -1; // resets/initilizes the username selected
     $scope.isLoggedIn = $cookies.getObject('firebaseAuth') != null ? true : false; //resets/intitilzes logged in trigger
-
-    
-        
+   
     $scope.posts = [];
     var firePosts = $firebaseArray(ref.child("Posts"));
     firePosts.$loaded().then(function(x) {
@@ -66,22 +64,22 @@ app.config(function($stateProvider, $urlRouterProvider){
         console.log("Error:", error);
     });
     
-    // Adds events to main page
-    console.log($scope.events);
-    // array for holding all event objects
+    
+    // Array for holding all event objects
     if ($scope.events === undefined) {
         $scope.events = [];
     }
-    console.log($scope.events);
     
+    // Reference to firebase
     var eventRef = new Firebase('https://localsound.firebaseio.com/Events');
     
-    // make sure main page is loaded, then show events
+    // Make sure main page is loaded, then adds events
     eventRef.once("value", function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
             $scope.events.push(childSnapshot.val());
             console.log($scope.events);
         })
+    // Checks to see if objects were able to load, throws error if not
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
@@ -233,12 +231,13 @@ app.config(function($stateProvider, $urlRouterProvider){
 }])
 .controller("newEventCtrl", ['$scope', '$firebaseObject', '$firebaseArray', function($scope, $firebaseObject, $firebaseArray) {
 
+    // Reference to firebase
     var ref = new Firebase('https://localsound.firebaseio.com/Events');
     
-    // object for storing new events created on /events page
+    // Stores new events created on /events page
     $scope.eventObject = {}; 
     
-    // creates new event
+    // Creates new event
     $scope.createEvent = function() {
         ref.push({
             city: $scope.eventObject.city,
