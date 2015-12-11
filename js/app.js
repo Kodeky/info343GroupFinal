@@ -72,7 +72,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     $scope.addPost = function() {
         $scope.inputLink = document.getElementById("scLink").value;
         var authData = $cookies.getObject('firebaseAuth');
-        ref.child("Posts").$add({
+        ref.child("Posts").push({
             uid: authData.uid,
             rating: 0,
             soundcloud_url: $scope.inputLink,
@@ -85,6 +85,7 @@ app.config(function($stateProvider, $urlRouterProvider){
                 console.log("Success");
             }
         })
+        $window.location.href = '/';
     }
       
     //TODO: Add upvote functionality to featured posts
