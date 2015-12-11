@@ -37,9 +37,11 @@ app.config(function($stateProvider, $urlRouterProvider){
     
     $scope.sortReverse  = false;  // resets/initilizes the default sort order
     $scope.isVisible = []; // resets/initilizes the array for show buttons
-    $scope.isHidden = []; // resets/initilizes the array for hide buttons
+    $scope.isHidden = [];
+    $scope.hasVoted = [];// resets/initilizes the array for hide buttons
     $scope.seletedIndex = -1; // resets/initilizes the username selected
     $scope.isLoggedIn = $cookies.getObject('firebaseAuth') != null ? true : false; //resets/intitilzes logged in trigger
+
     
         
     $scope.posts = [];
@@ -55,7 +57,9 @@ app.config(function($stateProvider, $urlRouterProvider){
         });
         //Initializes Show and hide for posts
         for (var i=0; i<$scope.posts.length; i++) {
-            $scope.isVisible[i] = 'true'    ; 
+            $scope.isVisible[i] = 'true'; 
+            $scope.hasVoted[i] = 'false';
+            console.log($scope.hasVoted);
         }
     })
     .catch(function(error) {
@@ -88,13 +92,15 @@ app.config(function($stateProvider, $urlRouterProvider){
         var post = firePosts.$getRecord(postId);
         post.rating += 1;
         firePosts.$save(post).then(function(){});
+        $scope.hasVoted = true;
     }
     
     //TODO: Add downvote functionality to featured posts
     $scope.downVote = function(postId) {
-         var post = firePosts.$getRecord(postId);
+        var post = firePosts.$getRecord(postId);
         post.rating -= 1;
         firePosts.$save(post).then(function(){});
+        $scope.hasVoted = true;
     }
     
     $scope.login = function(email, password) {     
