@@ -15,7 +15,7 @@
     <div id="leftContent" ng-controller="newEventCtrl" class="col-md-3 col-sm-3 col-centered collapse in">
         <h1 id="header">Featured Events</h1>
         
-            <div id="events" ng-repeat="event in events | limitTo:10">
+            <div id="events" ng-repeat="event in events | limitTo:10 | orderEventBy:'duration'">
                 <h3>{{event.title}}</h3>
                 <p>{{event.city}}</p>
                 <p>{{event.dateTime | fDate:"MM/dd/yyyy 'at' h:mma"}}</p>

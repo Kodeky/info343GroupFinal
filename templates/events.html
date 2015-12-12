@@ -47,20 +47,19 @@
         
 <!--        Duration of paid event adspace    -->
         <div class="form-group">
-          <label for="sel1">How long would you like to display the event? ($25/day) </label>
+          <label for="sel1">For how many days would you like to display the event?</label>
             <div class="invalidEntry" ng-show="eventForm.duration.$touched">
                 <span ng-show="eventForm.duration.$error.required">Please select a duration.
                 </span>
             </div>
           <select class="form-control" name="duration" ng-model="eventObject.duration" ng-required="true">
-            <option>1 day</option>
-            <option>2 days</option>
-            <option>3 days</option>
-            <option>4 days</option>
-            <option>5 days</option>
-            <option>6 days</option>
-            <option>1 week</option>
-            <option>2 weeks</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
           </select>
         </div>
         
