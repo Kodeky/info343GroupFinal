@@ -237,6 +237,7 @@ app.config(function($stateProvider, $urlRouterProvider){
                 console.log(error);
             } else {
                 console.log("Success");
+                window.location.reload();
             }
         })
     }
