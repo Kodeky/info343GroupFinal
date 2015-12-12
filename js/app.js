@@ -1,9 +1,8 @@
+//AngularJS for LocalSound WebSite
+//Developed by Matthew McKenna, Gianni Mancinelli, and Sam Cochrane
+//UW INFO 343 D 
+
 'use strict';
-
-var SOUNDCLOUD_BASE_URL = 'https://api.soundcloud.com';
-var SOUNDCLOUD_CLIENT_ID = '3a0c15409a6b0e2610d61620155a549c';
-
-var FACEBOOK_APP_ID = '1676203739293367';
 
 var app = angular.module("localSoundApp", ['ngSanitize', 'firebase', "ui.router", 'ngCookies']);
 
@@ -30,16 +29,20 @@ app.config(function($stateProvider, $urlRouterProvider){
             url: '/login',
         templateUrl: "templates/login.html"
         })
-}).controller("localSoundCtrl", ['$scope', '$http', '$sce', '$window', '$cookies', 'Profile', '$firebaseArray', function ($scope, $http, $sce, $window, $cookies, Profile, $firebaseArray) {
+})//Controller for homepage and overall functionality.
+.controller("localSoundCtrl", ['$scope', '$http', '$sce', '$window', '$cookies', 'Profile', '$firebaseArray', function ($scope, $http, $sce, $window, $cookies, Profile, $firebaseArray) {
     
-    var authRef = new Firebase('https://localsound.firebaseio.com/web/uauth');
-    var ref = new Firebase('https://localsound.firebaseio.com');
+    var authRef = new Firebase('https://localsound.firebaseio.com/web/uauth'); //ref to firebase app auth
+    var ref = new Firebase('https://localsound.firebaseio.com'); //ref to firebase app
     
-    $scope.isVisible = []; // resets/initilizes the array for soundcloud buttons
-    $scope.hasVoted = []; // resets/initilizes the array for vote buttons
-    $scope.selectedIndex = -1;
-    $scope.isLoggedIn = $cookies.getObject('firebaseAuth') != null ? true : false; //resets/intitilzes logged in trigger
+    $scope.isVisible = []; // used later determine which soundcloud button is pressed
+    $scope.hasVoted = [];  //used to determine if user has voted. KNOWN BUG: only works locally
+    $scope.selectedIndex = -1; // used later to determine whic soundcloud button is sellected
+    
+    //Session Cookie for website. Set during login.
+    $scope.isLoggedIn = $cookies.getObject('firebaseAuth') != null ? true : false;
    
+    //Loads Syncronized array with Firebase for posts
     $scope.posts = [];
     var firePosts = $firebaseArray(ref.child("Posts"));
     firePosts.$loaded().then(function(x) {
@@ -71,7 +74,6 @@ app.config(function($stateProvider, $urlRouterProvider){
     eventRef.once("value", function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
             $scope.events.push(childSnapshot.val());
-            console.log($scope.events);
         })
     // Checks to see if objects were able to load, throws error if not
     }, function (errorObject) {
@@ -161,14 +163,16 @@ app.config(function($stateProvider, $urlRouterProvider){
             $scope.isVisible[$scope.selectedIndex] = false;
     	    $scope.selectedIndex = index;
     }
-
+    
+    
+    //used for new post model
     $scope.showModal = false;
     $scope.toggleModal = function () {
         $scope.showModal = !$scope.showModal;
     }
 
 
-}])
+}])//Control for signup page
 .controller("signupCtrl", ['$scope', '$window', function($scope, $window) {
 
     var ref = new Firebase('https://localsound.firebaseio.com/Profiles');
@@ -185,12 +189,14 @@ app.config(function($stateProvider, $urlRouterProvider){
         }
     }
     
+    //creates profile data on firebase
     $scope.createProfileData = function(authData) {
         delete $scope.registrationInfo.password;
         $scope.registrationInfo.posts = {};
         ref.child(authData.uid).set($scope.registrationInfo);
     }
     
+    //creates new firebase authentication user
     $scope.register = function() {
         ref.createUser({
             email: $scope.registrationInfo.email,
@@ -208,14 +214,14 @@ app.config(function($stateProvider, $urlRouterProvider){
 
 
 
-}])
+}])//Controleer for Profile partial
 .controller('profileCtrl', ['$scope', '$cookies', 'Profile', function($scope, $cookies, Profile) {
     var authData = $cookies.getObject('firebaseAuth');
     var profile = Profile(authData.uid)
     $scope.user = profile
     profile.$loaded().then(function(response) {
     });
-}])
+}])//Controller for newEvents partial
 .controller("newEventCtrl", ['$scope', '$firebaseObject', '$firebaseArray', function($scope, $firebaseObject, $firebaseArray) {
 
     // Reference to firebase
@@ -242,7 +248,7 @@ app.config(function($stateProvider, $urlRouterProvider){
         })
     }
     
-}])
+}])//modal for new posts
 .directive('modal', function () {
     return {
         template: '<div class="modal fade">' + 
@@ -282,7 +288,7 @@ app.config(function($stateProvider, $urlRouterProvider){
                 });
             });
         }
-    }})
+    }})//Creates a profile firebase object
 .factory("Profile", ["$firebaseObject",function($firebaseObject) {
     return function(id) {
       // create a reference to the database node where we will store our data
@@ -293,7 +299,7 @@ app.config(function($stateProvider, $urlRouterProvider){
       return $firebaseObject(profileRef);
     }
   }
-])
+])//formating date for our page
 .filter('fDate', [
     '$filter', function($filter) {
         return function(input, format) {
