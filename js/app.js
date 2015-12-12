@@ -35,35 +35,29 @@ app.config(function($stateProvider, $urlRouterProvider){
     var authRef = new Firebase('https://localsound.firebaseio.com/web/uauth');
     var ref = new Firebase('https://localsound.firebaseio.com');
     
-    $scope.sortReverse  = false;  // resets/initilizes the default sort order
-    $scope.isVisible = []; // resets/initilizes the array for show buttons
-    $scope.isHidden = [];
-    $scope.hasVoted = [];// resets/initilizes the array for hide buttons
-    $scope.seletedIndex = -1; // resets/initilizes the username selected
+    $scope.isVisible = []; // resets/initilizes the array for soundcloud buttons
+    $scope.hasVoted = []; // resets/initilizes the array for vote buttons
+    $scope.selectedIndex = -1;
     $scope.isLoggedIn = $cookies.getObject('firebaseAuth') != null ? true : false; //resets/intitilzes logged in trigger
    
     $scope.posts = [];
     var firePosts = $firebaseArray(ref.child("Posts"));
     firePosts.$loaded().then(function(x) {
         angular.forEach(firePosts, function(data, index) {
+            var tempObj = data;
             var profile = Profile(data.uid)
             profile.$loaded().then(function(response) {
-                data.username = profile.username;
-                data.avatar = profile.avatarUrl;
+                tempObj.username = profile.username;
+                tempObj.avatar = profile.avatarUrl;
             });
-            $scope.posts.push(data);
+            $scope.posts.push(tempObj);
+            $scope.isVisible[data.$id] = false;
+            $scope.hasVoted[data.$id] = false;
         });
-        //Initializes Show and hide for posts
-        for (var i=0; i<$scope.posts.length; i++) {
-            $scope.isVisible[i] = true; 
-            $scope.hasVoted[i] = false;
-            console.log($scope.hasVoted);
-        }
     })
     .catch(function(error) {
         console.log("Error:", error);
     });
-    
     
     // Array for holding all event objects
     if ($scope.events === undefined) {
@@ -93,7 +87,7 @@ app.config(function($stateProvider, $urlRouterProvider){
         ref.child("Posts").push({
             uid: authData.uid,
             rating: 0,
-            soundcloud_url: $scope.inputLink,
+            soundcloud_url: $scope.inputLink, 
             dateTime: Date()
 
         }, function(error, eData) {
@@ -107,20 +101,20 @@ app.config(function($stateProvider, $urlRouterProvider){
     }
       
     //Upvote functionality for posts
-    $scope.upVote = function(postId, index) {
+    $scope.upVote = function(postId) {
         var post = firePosts.$getRecord(postId);
         console.log(postId);
         post.rating += 1;
         firePosts.$save(post);
-        $scope.hasVoted[index] = true;
+        $scope.hasVoted[postId] = true;
     }
     
     //Downvote functionality for featured posts
-    $scope.downVote = function(postId, index) {
+    $scope.downVote = function(postId) {
         var post = firePosts.$getRecord(postId);
         post.rating -= 1;
         firePosts.$save(post);
-        $scope.hasVoted[index] = true;
+        $scope.hasVoted[postId] = true;
     }
     
     //Logs user in using Firebase, sets cookie
@@ -150,20 +144,22 @@ app.config(function($stateProvider, $urlRouterProvider){
     }
     
     //Loads featured info
-    $scope.loadInfo = function($index) {
-    	$scope.selectedIndex = $index;
-    	var id = $scope.posts[$index].soundcloud_url;
+    $scope.loadInfo = function(index, soundcloud_url) {
+    	var id = soundcloud_url;
 
     	//Shows or hides SoundCloud player depending on what button was pressed
-        if($scope.isVisible[$index]) {
+        if(!$scope.isVisible[index]) {
     		var src = "https://w.soundcloud.com/player/?url=" + id + "&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;visual=true";
     		$scope.player = '<iframe width="100%" height="350" scrolling="yes" frameborder="no"  src=' + src + '></iframe>'
     		$scope.trustPlayer = $sce.trustAsHtml($scope.player);
+            $scope.isVisible[index] = true;
+           
     	} else {
     		$scope.trustPlayer = $sce.trustAsHtml('');
+            $scope.isVisible[index] = false;
     	}
-    	$scope.isVisible[$index] = !$scope.isVisible[$index];
-		$scope.isHidden[$index] = !$scope.isHidden[$index];
+            $scope.isVisible[$scope.selectedIndex] = false;
+    	    $scope.selectedIndex = index;
     }
 
     $scope.showModal = false;

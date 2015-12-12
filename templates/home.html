@@ -36,19 +36,19 @@
                             <th>Date Posted</th>
                             <th>SoundCloud Player</th>
                           </tr>
-                        <tr ng-repeat="post in posts | orderBy: '-rating' | filter:searchQuery" ng-onclick="loadInfo($index)">
+                        <tr ng-repeat="post in posts | orderBy: '-rating' | filter:searchQuery">
                         <td><img ng-src="{{post.avatar}}" height="50px" width="50px"></td>
                         <td>
-                            <button class="btn btn-default" type="submit" id="upvote{{$index}}" ng-click="upVote(post.$id, $index)" ng-show="isLoggedIn && !hasVoted[$index]"><i class="glyphicon glyphicon-arrow-up"></i></button>
+                            <button class="btn btn-default" type="submit" id="upvote{{post.$id}}" ng-click="upVote(post.$id)" ng-show="isLoggedIn && !hasVoted[post.$id]"><i class="glyphicon glyphicon-arrow-up"></i></button>
                             {{post.rating}}
-                            <button class="btn btn-default" type="submit" id="downvote{{$index}}" ng-click="downVote(post.$id, $index)" ng-show="isLoggedIn && !hasVoted[$index]"><i class="glyphicon glyphicon-arrow-down"></i></button>
+                            <button class="btn btn-default" type="submit" id="downvote{{post.$id}}" ng-click="downVote(post.$id)" ng-show="isLoggedIn && !hasVoted[post.$id]"><i class="glyphicon glyphicon-arrow-down"></i></button>
                         </td>
                         <td>{{post.username}}</td>
                         <td>{{post.dateTime | fDate:"MM/dd/yyyy 'at' h:mma"}}</td>
                         <td>
                           <div class="infoWrapper"><!-- Shows button corresponding to the Soundcloud player frame-->
-                            <button class="btn btn-default" type="submit" id="show{{$index}}" ng-click="loadInfo($index)" ng-show="isVisible[{{$index}}]">Show</button>
-                            <button class="btn btn-default" type="submit" id="hide{{$index}}" ng-click="loadInfo($index)" ng-show="isHidden[{{$index}}]">Hide</button>
+                            <button class="btn btn-default" type="submit" id="show{{post.$id}}" ng-click="loadInfo(post.$id, post.soundcloud_url)" ng-show="!isVisible[post.$id]">Show</button>
+                            <button class="btn btn-default" type="submit" id="hide{{post.$id}}" ng-click="loadInfo(post.$id, post.soundcloud_url)" ng-show="isVisible[post.$id]">Hide</button>
                           </div>
                         </td>
                       </tr>
@@ -69,19 +69,20 @@
                                 <th>SoundCloud Player</th>
                               </tr>
                 
-                            <tr ng-repeat="post in posts | orderBy: 'dateTime' | limitTo:10" ng-onclick="loadInfo($index)">
+                            <tr ng-repeat="post in posts | orderBy: 'dateTime' | limitTo:10">
+                                {{posts}}
                             <td><img ng-src="{{post.avatar}}" height="50px" width="50px"></td>
                             <td>
-                                <button class="btn btn-default" type="submit" id="upvote{{$index}}" ng-click="upVote(post.$id, $index)" ng-show="isLoggedIn && !hasVoted[$index]"><i class="glyphicon glyphicon-arrow-up"></i></button>
+                                <button class="btn btn-default" type="submit" id="upvote{{post.$id}}" ng-click="upVote(post.$id)" ng-show="isLoggedIn && !hasVoted[post.$id]"><i class="glyphicon glyphicon-arrow-up"></i></button>
                                 {{post.rating}}
-                                <button class="btn btn-default" type="submit" id="downvote{{$index}}" ng-click="downVote(post.$id, $index)" ng-show="isLoggedIn && !hasVoted[$index]"><i class="glyphicon glyphicon-arrow-down"></i></button>
+                                <button class="btn btn-default" type="submit" id="downvote{{post.$id}}" ng-click="downVote(post.$id)" ng-show="isLoggedIn && !hasVoted[post.$id]"><i class="glyphicon glyphicon-arrow-down"></i></button>
                             </td>
                             <td>{{post.username}}</td>
                             <td>{{post.dateTime | fDate:"MM/dd/yyyy 'at' h:mma"}}</td>
                             <td>
                               <div class="infoWrapper"><!-- Shows button corresponding to the Soundcloud player frame-->
-                                <button class="btn btn-default" type="submit" id="show{{$index}}" ng-click="loadInfo($index)" ng-show="isVisible[{{$index}}]">Show</button>
-                                <button class="btn btn-default" type="submit" id="hide{{$index}}" ng-click="loadInfo($index)" ng-show="isHidden[{{$index}}]">Hide</button>
+                                <button class="btn btn-default" type="submit" id="show{{post.$id}}" ng-click="loadInfo(post.$id, post.soundcloud_url)" ng-show="!isVisible[post.$id]">Show</button>
+                                <button class="btn btn-default" type="submit" id="hide{{post.$id}}" ng-click="loadInfo(post.$id, post.soundcloud_url)" ng-show="isVisible[post.$id]">Hide</button>
                               </div>
                             </td>
                           </tr>
