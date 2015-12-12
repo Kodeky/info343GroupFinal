@@ -70,7 +70,6 @@
                               </tr>
                 
                             <tr ng-repeat="post in posts | orderBy: 'dateTime' | limitTo:10">
-                                {{posts}}
                             <td><img ng-src="{{post.avatar}}" height="50px" width="50px"></td>
                             <td>
                                 <button class="btn btn-default" type="submit" id="upvote{{post.$id}}" ng-click="upVote(post.$id)" ng-show="isLoggedIn && !hasVoted[post.$id]"><i class="glyphicon glyphicon-arrow-up"></i></button>
