@@ -235,7 +235,6 @@ app.config(function($stateProvider, $urlRouterProvider){
             title: $scope.eventObject.title,
             body: $scope.eventObject.body,
             dateTime: $scope.eventObject.dateTime.toString(),
-            link: $scope.eventObject.link,
             duration: $scope.eventObject.duration
         }, function(error, eData) {
             if(error) {
